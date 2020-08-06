@@ -169,3 +169,52 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+function cprc() {
+    rsync -a ${DOTFILES_PATH}/.envrc .
+    direnv allow .
+}
+
+function proj() {
+    name=${1:-'dotfiles'}
+    branch=${2:-''}
+    name=$(titlecase $name)
+    dir=${HOME}/Projects/${name}
+    if [ ! -d "$dir" ]; then
+        git clone git@github.com:CarbonNV/${name} $dir
+    fi
+    cd $dir
+    cprc
+    git pull
+    if [[ -n "$branch" ]]; then
+        git checkout $branch
+        git pull
+    fi
+}
+
+function projc() {
+    name=${1:-''}
+    branch=${2:-''}
+    proj $name $branch
+    code .
+}
+
+function urlencode() {
+    local _length="${#1}"
+    for (( _offset = 0 ; _offset < _length ; _offset++ )); do
+        _print_offset="${1:_offset:1}"
+        case "${_print_offset}" in
+            [a-zA-Z0-9.~_-]) printf "${_print_offset}" ;;
+            ' ') printf '%%20' ;;
+            *) printf '%%%X' "'${_print_offset}" ;;
+        esac
+    done
+}
+
+function titlecase() {
+    echo $1 | awk '{for (i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1'
+}
+
+function lowercase() {
+    echo $1 | tr '[:upper:]' '[:lower:]'
+}

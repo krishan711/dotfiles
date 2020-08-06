@@ -4,7 +4,7 @@ export PATH="$HOME/bin:$PATH";
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
+for file in $(dirname ${BASH_SOURCE})/.{path,bash_prompt,exports,aliases,functions,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -48,3 +48,14 @@ complete -W "NSGlobalDomain" defaults;
 
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
+
+# setup npm to use local "global" packages (https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md)
+export NPM_PACKAGES_ROOT=$HOME/.npm-packages
+npm config set prefix $NPM_PACKAGES_ROOT
+export PATH=$PATH:$NPM_PACKAGES_ROOT/bin
+export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath)
+
+# Create symlink between vscode settings in team-engineering repo and on local device
+if [ -x $HOME/Library/Application\ Support ]; then
+    ln -f -s $(dirname "${BASH_SOURCE}")/vscode/settings.json $HOME/Library/Application\ Support/Code/User/settings.json
+fi
