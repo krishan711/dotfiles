@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 # Ensure up to date
-cd "$(dirname "${BASH_SOURCE}")";
-git pull origin master;
+cd "$(dirname "${BASH_SOURCE}")"
+git pull origin master
+direnv allow .
 
 # Profile setup
 touch ~/.bash_profile
@@ -20,3 +21,6 @@ cp $(pwd)/.bashrc ~
 
 # Configure mac
 ./.macos
+
+# Install vscode extensions
+./vscode/install-extensions.sh
