@@ -1,1 +1,13 @@
 code --install-extension coenraads.bracket-pair-colorizer-2
+code --install-extension jpoissonnier.vscode-styled-components
+code --install-extension ms-python.python
+code --install-extension ms-vsliveshare.vsliveshare
+code --install-extension vscode-icons-team.vscode-icons
+code --install-extension wmaurer.change-case
+code --install-extension cssho.vscode-svgviewer
+code --install-extension ms-vscode-remote.remote-containers
+code --install-extension ms-vscode-remote.remote-ssh
+code --install-extension ms-vscode-remote.remote-ssh-edit
+code --install-extension ms-vscode-remote.vscode-remote-extensionpack
+code --install-extension shanoor.vscode-nginx
+code --install-extension streetsidesoftware.code-spell-checker

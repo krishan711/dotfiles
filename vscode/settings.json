@@ -1,3 +1,94 @@
 {
-    "files.autoSave": "afterDelay"
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.statusBar.visible": true,
+    "window.zoomLevel": 0,
+    "window.title": "${activeEditorLong},${separator}${rootName}",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.insertSpaces": true,
+    "editor.fontFamily": "'SF Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.minimap.enabled": false,
+    "editor.renderWhitespace": "boundary",
+    "editor.fontSize": 12,
+    "explorer.openEditors.visible": 0,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/.idea": true,
+        "**/__pycache__": true
+    },
+    "terminal.integrated.scrollback": 3000,
+    "terminal.integrated.cursorBlinking": true,
+    "python.linting.mypyArgs": [
+        "--follow-imports=silent"
+    ],
+    "python.linting.ignorePatterns": [
+        ".env/**/*.py",
+        ".vscode/*.py",
+        "**/*_pb2.py"
+    ],
+    "python.sortImports.args": [
+        "-sl"
+    ],
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.check.npmIsInstalled": false,
+    "extensions.ignoreRecommendations": true,
+    "explorer.confirmDragAndDrop": false,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "explorer.confirmDelete": false,
+    "workbench.editor.showTabs": true,
+    "workbench.editor.enablePreview": false,
+    "workbench.iconTheme": "vscode-icons",
+    "vsicons.dontShowNewVersionMessage": true,
+    "bracket-pair-colorizer-2.colors": [
+        "#c2ab82",
+        "#70b1e6",
+        "#b580ba",
+    ],
+    "editor.fontLigatures": true,
+    "[javascript]": {
+        "editor.tabSize": 2
+    },
+    "[javascriptreact]": {
+        "editor.tabSize": 2
+    },
+    "[typescript]": {
+        "editor.tabSize": 2
+    },
+    "[typescriptreact]": {
+        "editor.tabSize": 2
+    },
+    "[python]": {
+        "editor.tabSize": 4
+    },
+    "[yaml]": {
+        "editor.tabSize": 2
+    },
+    "editor.tabSize": 4,
+    "editor.suggestSelection": "first",
+    "cSpell.userWords": [
+        "Kiba",
+        "boto",
+        "cname",
+        "everypage",
+        "everyview",
+        "favicon",
+        "favicons",
+        "focusable",
+        "kibalabs",
+        "krish",
+        "krupali",
+        "scrollable",
+        "sendy",
+        "subatoms",
+        "tzinfo"
+    ],
 }

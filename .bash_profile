@@ -1,5 +1,6 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
+export PATH="/usr/local/sbin:$PATH";
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -59,3 +60,6 @@ export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath)
 if [ -x $HOME/Library/Application\ Support ]; then
     ln -f -s $(dirname "${BASH_SOURCE}")/vscode/settings.json $HOME/Library/Application\ Support/Code/User/settings.json
 fi
+
+# direnv
+eval "$(direnv hook bash)"
