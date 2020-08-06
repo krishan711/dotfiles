@@ -181,7 +181,8 @@ function proj() {
     name=$(titlecase $name)
     dir=${HOME}/Projects/${name}
     if [ ! -d "$dir" ]; then
-        git clone git@github.com:CarbonNV/${name} $dir
+        echo "Project not found"
+		return
     fi
     cd $dir
     cprc
