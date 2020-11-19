@@ -3,7 +3,7 @@
     "workbench.colorTheme": "One Dark Pro",
     "workbench.statusBar.visible": true,
     "window.zoomLevel": 0,
-    "window.title": "${activeEditorLong},${separator}${rootName}",
+    "window.title": "${activeEditorLong}${separator}${rootName}",
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1,
     "files.trimTrailingWhitespace": true,
