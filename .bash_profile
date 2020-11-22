@@ -56,9 +56,17 @@ npm config set prefix $NPM_PACKAGES_ROOT
 export PATH=$PATH:$NPM_PACKAGES_ROOT/bin
 export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath)
 
-# Create symlink between vscode settings in team-engineering repo and on local device
+# Create symlink between vscode settings in this repo and on local device
 if [ -x $HOME/Library/Application\ Support ]; then
     ln -f -s $(dirname "${BASH_SOURCE}")/vscode/settings.json $HOME/Library/Application\ Support/Code/User/settings.json
+fi
+
+# Load passwords
+if [ -f $HOME/.bash_passwords ]; then
+    source $HOME/.bash_passwords
+fi
+if [ -f $HOME/.bash_secrets ]; then
+    source $HOME/.bash_secrets
 fi
 
 # direnv
