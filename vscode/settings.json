@@ -98,4 +98,5 @@
         "theming",
         "tzinfo"
     ],
+    "terminal.integrated.shell.osx": "/usr/local/bin/bash",
 }
