@@ -2,7 +2,13 @@
 
 # Ensure up to date
 cd "$(dirname "${BASH_SOURCE}")"
-git pull origin master
+git pull origin main
+
+# Download brew
+./brew.sh
+
+# Brew depedent commands
+chsh -s /usr/local/bin/bash
 direnv allow .
 
 # Profile setup
@@ -15,9 +21,6 @@ cp $(pwd)/.gitconfig ~
 cp $(pwd)/.inputrc ~
 cp $(pwd)/.screenrc ~
 cp $(pwd)/.bashrc ~
-
-# Download brew
-./brew.sh
 
 # Configure mac
 ./.macos
