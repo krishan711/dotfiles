@@ -219,3 +219,11 @@ function titlecase() {
 function lowercase() {
     echo $1 | tr '[:upper:]' '[:lower:]'
 }
+
+function npm-version() {
+	type=$1
+	version=$(npm version $type --no-git-tag)
+	code --wait CHANGELOG.md
+	git commit -am "$version"
+	git tag -a $version -m "$version"
+}
