@@ -133,7 +133,8 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
             'contexts': []
         },
         'required_linear_history': True,
-        'enforce_admins': True,
+        # TODO(krishan711): remove this when there's a better way to merge my own code!
+        'enforce_admins': False,
         'restrictions': {
             'users': [],
             'teams': [],
@@ -141,7 +142,7 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
     })).raise_for_status()
 
     # Update security settings
-    requests.put(url=f'https://api.github.com/repos/{organization}/{name}/automated-security-fixes', headers=githubHeadersLokiPreview).raise_for_status()
+    requests.delete(url=f'https://api.github.com/repos/{organization}/{name}/automated-security-fixes', headers=githubHeadersLokiPreview).raise_for_status()
 
 @click.command()
 @click.option('-o', '--organization', 'organization', required=True, type=str, default='krishan711')

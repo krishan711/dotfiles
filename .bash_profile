@@ -52,7 +52,8 @@ complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes Syste
 
 # setup npm to use local "global" packages (https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md)
 export NPM_PACKAGES_ROOT=$HOME/.npm-packages
-npm config set prefix $NPM_PACKAGES_ROOT
+mkdir -p $NPM_PACKAGES_ROOT/lib
+npm config set prefix $NPM_PACKAGES_ROOT/
 export PATH=$PATH:$NPM_PACKAGES_ROOT/bin
 export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath)
 
