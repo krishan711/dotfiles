@@ -94,7 +94,8 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
         'allow_merge_commit': False,
         'delete_branch_on_merge': True,
         'description': '',
-    })).raise_for_status()
+    }))
+    response.raise_for_status()
 
     # Update labels
     labelResponse = requests.get(url=f'https://api.github.com/repos/{organization}/{name}/labels', headers=githubHeaders)
@@ -142,7 +143,7 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
     })).raise_for_status()
 
     # Update security settings
-    requests.delete(url=f'https://api.github.com/repos/{organization}/{name}/automated-security-fixes', headers=githubHeadersLokiPreview).raise_for_status()
+    # requests.delete(url=f'https://api.github.com/repos/{organization}/{name}/automated-security-fixes', headers=githubHeadersLokiPreview).raise_for_status()
 
 @click.command()
 @click.option('-o', '--organization', 'organization', required=True, type=str, default='krishan711')
