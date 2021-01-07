@@ -181,7 +181,7 @@ alias gbc='git checkout'
 alias gbcn='git checkout -b'
 
 # Random
-alias rm-orig='find . -name *.orig -type f -exec rm {} \;'
+alias rm-orig='find . -name *.orig -type f -delete'
 alias reload='source ~/.bash_profile'
 alias insomnia='caffeinate -dimsu'
 alias rm-dsstore='find . -name .DS_Store -type f -exec rm {} \;'
