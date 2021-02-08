@@ -229,13 +229,3 @@ function npm-version() {
 	git commit -am "$version"
 	git tag -a $version -m "$version"
 }
-
-function npm-run-version() {
-	type=${1:-'patch'}
-	version=$(npm run version $type --no-git-tag)
-	if [ -f CHANGELOG.md ]; then
-			code --wait CHANGELOG.md
-	fi
-	git commit -am "$version"
-	git tag -a $version -m "$version"
-}
