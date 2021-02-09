@@ -106,6 +106,8 @@ brew install libmagic
 brew install cairo
 brew install pkg-config
 brew install imagemagick
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
 
 # Remove outdated versions from the cellar.
 brew cleanup
