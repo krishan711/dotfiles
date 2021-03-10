@@ -125,7 +125,7 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
             })).raise_for_status()
 
     # Update protected branches
-    requests.put(url=f'https://api.github.com/repos/{organization}/{name}/branches/{primaryBranch}/protection', headers=githubHeaders, data=json.dumps({
+    response = requests.put(url=f'https://api.github.com/repos/{organization}/{name}/branches/{primaryBranch}/protection', headers=githubHeaders, data=json.dumps({
         'required_pull_request_reviews': {
             'require_code_owner_reviews': True
         },
@@ -140,7 +140,12 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
             'users': [],
             'teams': [],
         },
-    })).raise_for_status()
+    }))
+    try:
+        response.raise_for_status()
+    except Exception as exception:
+        print(f'Error: {response.text}')
+        raise exception
 
     # Update security settings
     # requests.delete(url=f'https://api.github.com/repos/{organization}/{name}/automated-security-fixes', headers=githubHeadersLokiPreview).raise_for_status()
