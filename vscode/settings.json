@@ -2,7 +2,6 @@
     "workbench.startupEditor": "newUntitledFile",
     "workbench.colorTheme": "One Dark Pro",
     "workbench.statusBar.visible": true,
-    "window.zoomLevel": 0,
     "window.title": "${activeEditorLong}${separator}${rootName}",
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1,
@@ -78,6 +77,7 @@
     "editor.tabSize": 4,
     "editor.suggestSelection": "first",
     "cSpell.userWords": [
+        "Dismissable",
         "Kiba",
         "arkera",
         "boto",
@@ -96,6 +96,7 @@
         "millis",
         "octokit",
         "ponyfill",
+        "pylint",
         "repos",
         "scrollable",
         "sendy",

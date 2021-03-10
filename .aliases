@@ -183,7 +183,7 @@ alias gsn='git switch -c'
 alias gbcn='echo "Please use gsn instead"; git switch -c'
 
 # Random
-alias rm-orig='find . -name *.orig -type f -delete'
+alias rm-orig='rm **/*.orig'
 alias reload='source ~/.bash_profile'
 alias insomnia='caffeinate -dimsu'
 alias rm-dsstore='find . -name .DS_Store -type f -exec rm {} \;'
