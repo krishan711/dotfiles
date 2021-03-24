@@ -229,3 +229,7 @@ function npm-version() {
 	git commit -am "$version"
 	git tag -a $version -m "$version"
 }
+
+function b64() {
+	echo -n "$1" | base64
+}

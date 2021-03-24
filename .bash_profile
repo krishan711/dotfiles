@@ -72,3 +72,6 @@ fi
 
 # direnv
 eval "$(direnv hook bash)"
+
+# Go
+export GOPATH=~/.go
