@@ -108,6 +108,7 @@ brew install pkg-config
 brew install imagemagick
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
+brew install golang
 
 # Remove outdated versions from the cellar.
 brew cleanup
