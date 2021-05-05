@@ -135,7 +135,7 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
         },
         'required_linear_history': True,
         # TODO(krishan711): remove this when there's a better way to merge my own code!
-        'enforce_admins': False,
+        'enforce_admins': True,
         'restrictions': {
             'users': [],
             'teams': [],

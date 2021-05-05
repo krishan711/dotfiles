@@ -1,6 +1,6 @@
 {
     "workbench.startupEditor": "newUntitledFile",
-    "workbench.colorTheme": "GitHub Dark Default",
+    "workbench.colorTheme": "One Dark Pro",
     "workbench.statusBar.visible": true,
     "window.title": "${activeEditorLong}${separator}${rootName}",
     "files.autoSave": "afterDelay",
