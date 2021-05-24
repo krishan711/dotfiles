@@ -108,7 +108,7 @@
         "theming",
         "tzinfo"
     ],
-    "terminal.integrated.shell.osx": "/usr/local/bin/bash",
+    "terminal.integrated.defaultProfile.osx": "/usr/local/bin/bash",
     "workbench.editor.decorations.badges": true,
     "workbench.editor.wrapTabs": true,
     "workbench.editor.revealIfOpen": true,
@@ -117,5 +117,12 @@
             "viewType": "jupyter.notebook.ipynb",
             "filenamePattern": "*.ipynb"
         }
+    ],
+    "python.languageServer": "Pylance",
+    "python.analysis.extraPaths": [
+        "./api/"
+    ],
+    "cSpell.enableFiletypes": [
+        "!python"
     ],
 }
