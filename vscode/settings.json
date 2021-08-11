@@ -11,7 +11,6 @@
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.insertSpaces": true,
     "editor.fontFamily": "'SF Mono', Menlo, Monaco, 'Courier New', monospace",
-    "editor.minimap.enabled": false,
     "editor.renderWhitespace": "boundary",
     "editor.fontSize": 12,
     "explorer.openEditors.visible": 0,
@@ -120,11 +119,19 @@
         "./api/",
         "./client/",
     ],
+    "editor.renderControlCharacters": true,
+    "editor.minimap.enabled": false,
+    "redhat.telemetry.enabled": false,
     "notebook.cellToolbarLocation": {
         "default": "right",
         "jupyter-notebook": "left"
     },
-    "redhat.telemetry.enabled": false,
     "security.workspace.trust.untrustedFiles": "open",
-    "terminal.integrated.scrollback": 11000,
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.variableTypes.enabled": "all",
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": "all",
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": "all",
+    "typescript.inlayHints.parameterTypes.enabled": "all",
+    "typescript.inlayHints.enumMemberValues.enabled": "all",
+
 }

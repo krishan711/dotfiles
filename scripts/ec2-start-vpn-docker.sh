@@ -20,6 +20,7 @@ docker run -v $OPENVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN
 CLIENTNAME=$1
 OPENVPN_DATA='/etc/openvpn-data'
 
+# NOTE(krishan711): run these one at a time
 docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full $CLIENTNAME nopass
 docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_getclient $CLIENTNAME > $CLIENTNAME.ovpn
 sed -i '/redirect-gateway def1/# redirect-gateway def1' $CLIENTNAME.ovpn
