@@ -221,6 +221,7 @@ function lowercase() {
 }
 
 function npm-version() {
+	set -e
 	type=${1:-'patch'}
 	version=$(npm version $type --no-git-tag)
 	if [ -f CHANGELOG.md ]; then
@@ -228,6 +229,17 @@ function npm-version() {
 	fi
 	git commit -am "$version"
 	git tag -a $version -m "$version"
+}
+
+function pypi-version() {
+	set -e
+	code --wait setup.py
+	version=$(python setup.py --version)
+	if [ -f CHANGELOG.md ]; then
+		code --wait CHANGELOG.md
+	fi
+	git commit -am "v$version"
+	git tag -a "v$version" -m "v$version"
 }
 
 function b64() {

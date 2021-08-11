@@ -1,5 +1,5 @@
 {
-    "workbench.startupEditor": "newUntitledFile",
+    "workbench.startupEditor": "welcomePage",
     "workbench.colorTheme": "One Dark Pro",
     "workbench.statusBar.visible": true,
     "window.title": "${activeEditorLong}${separator}${rootName}",
@@ -24,7 +24,6 @@
         "**/.idea": true,
         "**/__pycache__": true
     },
-    "terminal.integrated.scrollback": 3000,
     "terminal.integrated.cursorBlinking": true,
     "python.linting.mypyArgs": [
         "--follow-imports=silent"
@@ -85,6 +84,7 @@
         "arkera",
         "boto",
         "cname",
+        "cognitron",
         "ethereum",
         "everypage",
         "everyview",
@@ -112,17 +112,19 @@
     "workbench.editor.decorations.badges": true,
     "workbench.editor.wrapTabs": true,
     "workbench.editor.revealIfOpen": true,
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
     "python.languageServer": "Pylance",
     "python.analysis.extraPaths": [
-        "./api/"
+        "./api/",
+        "./client/",
     ],
-    "cSpell.enableFiletypes": [
-        "!python"
-    ],
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "redhat.telemetry.enabled": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.scrollback": 11000,
 }

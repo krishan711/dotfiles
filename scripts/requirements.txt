@@ -1,4 +1,5 @@
 click==7.1.2
 requests==2.25.1
-awscli==1.19.2
 wheel==0.36.2
+asyncclick==7.1.2.3
+kiba-core[queues]==0.2.0
