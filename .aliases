@@ -159,6 +159,7 @@ alias gbds='git branch | grep -v "main" | grep -v "master" | grep -v "develop" |
 alias ga='git add'
 alias gaa='git add -A .'
 alias gc='git commit'
+alias gcl='git commit -m .'
 alias gce='git commit -am .'
 alias gca='git commit --amend'
 alias gcan='git commit --amend --no-edit'

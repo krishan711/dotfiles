@@ -75,3 +75,6 @@ eval "$(direnv hook bash)"
 
 # Go
 export GOPATH=~/.go
+
+# Solana
+export PATH=$PATH:~/.local/share/solana/install/active_release/bin

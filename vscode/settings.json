@@ -128,10 +128,12 @@
     },
     "security.workspace.trust.untrustedFiles": "open",
     "typescript.inlayHints.parameterNames.enabled": "all",
-    "typescript.inlayHints.variableTypes.enabled": "all",
-    "typescript.inlayHints.propertyDeclarationTypes.enabled": "all",
-    "typescript.inlayHints.functionLikeReturnTypes.enabled": "all",
-    "typescript.inlayHints.parameterTypes.enabled": "all",
-    "typescript.inlayHints.enumMemberValues.enabled": "all",
-
+    "typescript.inlayHints.variableTypes.enabled": false,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": false,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true,
+    "terminal.integrated.scrollback": 10000,
+    "editor.bracketPairColorization.enabled": true,
+    "notebook.lineNumbers": "on",
 }
