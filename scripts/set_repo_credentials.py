@@ -44,6 +44,14 @@ def set_repo_credentials(organization: str, repoName: str, githubApiToken: str) 
         'APIBOX_PORT': _encrypt_secret(publicKey=key, value=os.environ['APIBOX_PORT']),
         'APIBOX_USER': _encrypt_secret(publicKey=key, value=os.environ['APIBOX_USER']),
         'APIBOX_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
+        'WORKERBOX_URL': _encrypt_secret(publicKey=key, value=os.environ['WORKERBOX_URL']),
+        'WORKERBOX_PORT': _encrypt_secret(publicKey=key, value=os.environ['WORKERBOX_PORT']),
+        'WORKERBOX_USER': _encrypt_secret(publicKey=key, value=os.environ['WORKERBOX_USER']),
+        'WORKERBOX_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
+        'CERTBOX_URL': _encrypt_secret(publicKey=key, value=os.environ['CERTBOX_URL']),
+        'CERTBOX_PORT': _encrypt_secret(publicKey=key, value=os.environ['CERTBOX_PORT']),
+        'CERTBOX_USER': _encrypt_secret(publicKey=key, value=os.environ['CERTBOX_USER']),
+        'CERTBOX_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
     }
 
     for secretName, secretValue in secrets.items():
@@ -53,7 +61,7 @@ def set_repo_credentials(organization: str, repoName: str, githubApiToken: str) 
         }))
         response.raise_for_status()
 
-    logging.info(f'save this to apibox:')
+    logging.info(f'save this to apibox and/or workerbox and/or certbox:')
     logging.info(publicSshKey)
 
 

@@ -1,5 +1,4 @@
 {
-    "workbench.startupEditor": "welcomePage",
     "workbench.colorTheme": "One Dark Pro",
     "workbench.statusBar.visible": true,
     "window.title": "${activeEditorLong}${separator}${rootName}",
@@ -45,11 +44,6 @@
     "workbench.editor.enablePreview": false,
     "workbench.iconTheme": "vscode-icons",
     "vsicons.dontShowNewVersionMessage": true,
-    "bracket-pair-colorizer-2.colors": [
-        "#c2ab82",
-        "#70b1e6",
-        "#b580ba",
-    ],
     "editor.fontLigatures": true,
     "[javascript]": {
         "editor.tabSize": 2
@@ -136,4 +130,5 @@
     "terminal.integrated.scrollback": 10000,
     "editor.bracketPairColorization.enabled": true,
     "notebook.lineNumbers": "on",
+    "workbench.startupEditor": "none",
 }
