@@ -40,13 +40,15 @@
     "explorer.confirmDragAndDrop": false,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDelete": false,
-    "workbench.editor.showTabs": true,
     "workbench.editor.enablePreview": false,
     "workbench.iconTheme": "vscode-icons",
     "vsicons.dontShowNewVersionMessage": true,
     "editor.fontLigatures": true,
     "[javascript]": {
         "editor.tabSize": 2
+    },
+    "[solidity]": {
+        "editor.tabSize": 4
     },
     "[javascriptreact]": {
         "editor.tabSize": 2
@@ -101,9 +103,8 @@
         "theming",
         "tzinfo"
     ],
-    "terminal.integrated.defaultProfile.osx": "/usr/local/bin/bash",
+    "terminal.integrated.defaultProfile.osx": "bash",
     "workbench.editor.decorations.badges": true,
-    "workbench.editor.wrapTabs": true,
     "workbench.editor.revealIfOpen": true,
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook"
@@ -131,4 +132,14 @@
     "editor.bracketPairColorization.enabled": true,
     "notebook.lineNumbers": "on",
     "workbench.startupEditor": "none",
+    "editor.hover.delay": 2000,
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "**/.github/workflows/*.yml"
+    },
+    "workbench.editor.wrapTabs": true,
+    "window.nativeTabs": true,
+    "workbench.editor.highlightModifiedTabs": true,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.minimumContrastRatio": 1
 }

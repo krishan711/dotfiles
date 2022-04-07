@@ -224,6 +224,7 @@ function npm-version() {
 	set -e
 	type=${1:-'patch'}
 	version=$(npm version $type --no-git-tag)
+	echo $version
 	if [ -f CHANGELOG.md ]; then
 		code --wait CHANGELOG.md
 	fi
