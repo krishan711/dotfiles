@@ -11,7 +11,7 @@ from core.slack_client import SlackClient
 async def post():
     sqsClient = boto3.client(service_name='sqs', region_name='eu-west-1', aws_access_key_id=os.environ['AWS_KEY'], aws_secret_access_key=os.environ['AWS_SECRET'])
     requester = Requester()
-    slackClient = SlackClient(webhookUrl=os.environ['SLACK_WEBHOOK_URL'], requester=requester, defaultSender='worker', defaultChannel='notd-notifications')
+    slackClient = SlackClient(webhookUrl=os.environ['SLACK_WEBHOOK_URL'], requester=requester, defaultSender='worker', defaultChannel='kiba-dev')
     sqsResponse = sqsClient.list_queues()
     sqsQueueUrls = sqsResponse.get("QueueUrls")
     queueSizes = dict()

@@ -52,6 +52,10 @@ def set_repo_credentials(organization: str, repoName: str, githubApiToken: str) 
         'CERTBOX_PORT': _encrypt_secret(publicKey=key, value=os.environ['CERTBOX_PORT']),
         'CERTBOX_USER': _encrypt_secret(publicKey=key, value=os.environ['CERTBOX_USER']),
         'CERTBOX_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
+        'MDTPBOX_URL': _encrypt_secret(publicKey=key, value=os.environ['MDTPBOX_URL']),
+        'MDTPBOX_PORT': _encrypt_secret(publicKey=key, value=os.environ['MDTPBOX_PORT']),
+        'MDTPBOX_USER': _encrypt_secret(publicKey=key, value=os.environ['MDTPBOX_USER']),
+        'MDTPBOX_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
     }
 
     for secretName, secretValue in secrets.items():

@@ -1,5 +1,6 @@
 import os
 import logging
+import json
 
 import boto3
 import asyncclick as click
@@ -20,7 +21,10 @@ async def run(queueName: str):
             return
         for message in messages:
             print('message', message)
-            await workQueue.send_message(message=message)
+            if message.content.get('registryAddress') == '0xBaa5DEcDffce1C099C82ef978c57475865334E36':
+                print('Skipping bad registry: 0xBaa5DEcDffce1C099C82ef978c57475865334E36')
+            else:
+                await workQueue.send_message(message=message)
             await workQueueDl.delete_message(message=message)
 
 if __name__ == '__main__':

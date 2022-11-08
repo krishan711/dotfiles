@@ -14,7 +14,7 @@ async def post():
     requester = Requester()
 
     awsRequester = AwsRequester(accessKeyId=os.environ['AWS_KEY'], accessKeySecret=os.environ['AWS_SECRET'])
-    slackClient = SlackClient(webhookUrl=os.environ['SLACK_WEBHOOK_URL'], requester=requester, defaultSender='worker', defaultChannel='notd-notifications')
+    slackClient = SlackClient(webhookUrl=os.environ['SLACK_WEBHOOK_URL'], requester=requester, defaultSender='worker', defaultChannel='kiba-dev')
 
     # await awsRequester.make_request(method='PUT', url=f'{OPENSEARCH_URL}/_snapshot/kiba-logs', dataDict={
     #     "type": "s3",

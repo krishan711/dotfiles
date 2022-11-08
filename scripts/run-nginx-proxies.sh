@@ -2,7 +2,7 @@
 set -e -o pipefail
 
 name="proxy"
-dockerImageName="jwilder/nginx-proxy"
+dockerImageName="nginxproxy/nginx-proxy"
 dockerTag="latest"
 dockerImage="${dockerImageName}:${dockerTag}"
 
@@ -19,6 +19,7 @@ docker run \
     --volume /etc/nginx/vhost.d \
     --volume /usr/share/nginx/html \
     --volume /var/run/docker.sock:/tmp/docker.sock:ro \
+    --volume $(pwd)/nginx-custom.conf:/etc/nginx/conf.d/custom.conf \
     ${dockerImage}
 
 proxyContainerName=${name}

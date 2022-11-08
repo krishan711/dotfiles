@@ -223,7 +223,8 @@ function lowercase() {
 function npm-version() {
 	set -e
 	type=${1:-'patch'}
-	version=$(npm version $type --no-git-tag)
+	npm version $type --no-git-tag
+	version="v$(cat package.json | jq -r '.version')"
 	echo $version
 	if [ -f CHANGELOG.md ]; then
 		code --wait CHANGELOG.md
@@ -232,15 +233,30 @@ function npm-version() {
 	git tag -a $version -m "$version"
 }
 
-function pypi-version() {
+function npmw-version() {
 	set -e
-	code --wait setup.py
-	version=$(python setup.py --version)
+	type=${1:-'patch'}
+	npm --workspaces --include-workspace-root version $type --no-git-tag
+	version="v$(cat package.json | jq -r '.version')"
+	echo $version
 	if [ -f CHANGELOG.md ]; then
 		code --wait CHANGELOG.md
 	fi
-	git commit -am "v$version"
-	git tag -a "v$version" -m "v$version"
+	code --wait ./packages/**/package.json
+	git commit -am "$version"
+	git tag -a $version -m "$version"
+}
+
+function pypi-version() {
+	set -e
+	code --wait setup.py
+	version="v$(python setup.py --version)"
+	echo $version
+	if [ -f CHANGELOG.md ]; then
+		code --wait CHANGELOG.md
+	fi
+	git commit -am "$version"
+	git tag -a $version -m "$version"
 }
 
 function b64() {

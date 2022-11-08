@@ -43,7 +43,7 @@
     "workbench.editor.enablePreview": false,
     "workbench.iconTheme": "vscode-icons",
     "vsicons.dontShowNewVersionMessage": true,
-    "editor.fontLigatures": true,
+    "editor.fontLigatures": false,
     "[javascript]": {
         "editor.tabSize": 2
     },
@@ -88,13 +88,17 @@
         "gmail",
         "ified",
         "interdimensional",
+        "ipfs",
         "Kiba",
         "kibalabs",
         "krish",
         "krishan",
         "krupali",
+        "looksrare",
+        "metadatas",
         "milli",
         "millis",
+        "notd",
         "octokit",
         "ponyfill",
         "pylint",
@@ -102,6 +106,7 @@
         "scrollable",
         "sendy",
         "subatoms",
+        "Subpage",
         "theming",
         "tzinfo"
     ],
@@ -143,5 +148,8 @@
     "workbench.editor.highlightModifiedTabs": true,
     "terminal.integrated.enableMultiLinePasteWarning": false,
     "terminal.integrated.cursorStyle": "line",
-    "terminal.integrated.minimumContrastRatio": 1
+    "terminal.integrated.minimumContrastRatio": 1,
+    "window.commandCenter": true,
+    "githubPullRequests.pullBranch": "never",
+    "hardhat.telemetry": true
 }
