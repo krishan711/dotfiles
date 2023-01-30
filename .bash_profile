@@ -57,6 +57,9 @@ npm config set prefix $NPM_PACKAGES_ROOT/
 export PATH=$PATH:$NPM_PACKAGES_ROOT/bin
 export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath)
 
+# set npm to ignore scripts for security (e.g. ignores post-install on deps)
+npm config set ignore-scripts true
+
 # Create symlink between vscode settings in this repo and on local device
 if [ -x $HOME/Library/Application\ Support ]; then
     ln -f -s $(dirname "${BASH_SOURCE}")/vscode/settings.json $HOME/Library/Application\ Support/Code/User/settings.json

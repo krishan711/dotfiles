@@ -1,6 +1,5 @@
 {
     "workbench.colorTheme": "One Dark Pro",
-    "workbench.statusBar.visible": true,
     "window.title": "${activeEditorLong}${separator}${rootName}",
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1,
@@ -75,9 +74,13 @@
     "editor.suggestSelection": "first",
     "cSpell.userWords": [
         "arkera",
+        "bioscore",
+        "bioscores",
         "boto",
+        "chatbox",
         "cname",
         "cognitron",
+        "creepz",
         "Dismissable",
         "ethereum",
         "everypage",
@@ -89,12 +92,14 @@
         "ified",
         "interdimensional",
         "ipfs",
+        "keccak",
         "Kiba",
         "kibalabs",
         "krish",
         "krishan",
         "krupali",
         "looksrare",
+        "merkletreejs",
         "metadatas",
         "milli",
         "millis",
@@ -108,13 +113,17 @@
         "subatoms",
         "Subpage",
         "theming",
-        "tzinfo"
+        "tokenpage",
+        "tokenpagexyz",
+        "tzinfo",
+        "wais"
     ],
     "terminal.integrated.defaultProfile.osx": "bash",
     "workbench.editor.decorations.badges": true,
     "workbench.editor.revealIfOpen": true,
     "workbench.editorAssociations": {
-        "*.ipynb": "jupyter-notebook"
+        "*.ipynb": "jupyter-notebook",
+        "*.html": "default"
     },
     "python.languageServer": "Pylance",
     "python.analysis.extraPaths": [
@@ -151,5 +160,9 @@
     "terminal.integrated.minimumContrastRatio": 1,
     "window.commandCenter": true,
     "githubPullRequests.pullBranch": "never",
-    "hardhat.telemetry": true
+    "hardhat.telemetry": true,
+    "editor.unicodeHighlight.allowedCharacters": {
+        "–": true
+    },
+    "solidity.telemetry": false
 }

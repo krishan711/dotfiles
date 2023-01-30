@@ -11,5 +11,6 @@ echo "---"
 echo -n "UTC  " ; TZ="UTC" date +'%H:%M'
 echo -n "PST  " ; TZ="America/Los_Angeles" date +'%H:%M'
 echo -n "EST  " ; TZ="America/New_York" date +'%H:%M'
-echo -n "BRT  " ; TZ="America/Sao_Paulo" date +'%H:%M'
-echo -n "PHT  " ; TZ="Asia/Manila" date +'%H:%M'
+echo -n "Brazil  " ; TZ="America/Sao_Paulo" date +'%H:%M'
+echo -n "Nigeria  " ; TZ="Africa/Lagos" date +'%H:%M'
+echo -n "Phlipines  " ; TZ="Asia/Manila" date +'%H:%M'

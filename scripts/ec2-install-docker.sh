@@ -2,6 +2,7 @@
 set -e -o pipefail
 
 # From https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
+# works on ARM too
 sudo yum update -y
 sudo amazon-linux-extras install -y docker
 sudo yum install -y docker
