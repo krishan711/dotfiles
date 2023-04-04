@@ -1,29 +1,30 @@
 #!/usr/bin/env bash
 
 # Ensure up to date
-cd "$(dirname "${BASH_SOURCE}")"
-git pull origin main
+# cd "$(dirname "${BASH_SOURCE}")"
+# git pull origin main
+
+# Configure mac
+./.macos
 
 # Download brew
 ./brew.sh
-
-# Brew depedent commands
-chsh -s /usr/local/bin/bash
-direnv allow .
-
-# Profile setup
-touch ~/.bash_profile
-echo "source $(pwd)/.bash_profile" > ~/.bash_profile
-source ~/.bash_profile
 
 # Copy files
 cp $(pwd)/.gitconfig ~
 cp $(pwd)/.inputrc ~
 cp $(pwd)/.screenrc ~
 cp $(pwd)/.bashrc ~
+cp $(pwd)/.bash_profile ~
 
-# Configure mac
-./.macos
+source ~/.bash_profile
+
+# Brew depedent commands
+chsh -s /opt/homebrew/bin/bash
+direnv allow .
 
 # Install vscode extensions
 ./vscode/install-extensions.sh
+
+# Install xbar stuff
+cp -R ./xbar/*.sh ~/Library/Application\ Support/xbar/plugins

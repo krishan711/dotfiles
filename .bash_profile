@@ -1,11 +1,13 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
 export PATH="/usr/local/sbin:$PATH";
+export PATH="/opt/homebrew/bin:$PATH";
+export DOTFILES_PATH='/Users/krishan/Projects/dotfiles'
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in $(dirname ${BASH_SOURCE})/.{path,bash_prompt,exports,aliases,functions,extra}; do
+for file in $DOTFILES_PATH/.{path,bash_prompt,exports,aliases,functions,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -61,8 +63,8 @@ export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath)
 npm config set ignore-scripts true
 
 # Create symlink between vscode settings in this repo and on local device
-if [ -x $HOME/Library/Application\ Support ]; then
-    ln -f -s $(dirname "${BASH_SOURCE}")/vscode/settings.json $HOME/Library/Application\ Support/Code/User/settings.json
+if [ -x $HOME/Library/Application\ Support/Code ]; then
+    ln -f -s $DOTFILES_PATH/vscode/settings.json $HOME/Library/Application\ Support/Code/User/settings.json
 fi
 
 # Load passwords

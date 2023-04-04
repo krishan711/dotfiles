@@ -9,10 +9,9 @@ code --install-extension ms-vscode-remote.remote-containers
 code --install-extension ms-vscode-remote.remote-ssh
 code --install-extension ms-vscode-remote.remote-ssh-edit
 code --install-extension ms-vscode-remote.vscode-remote-extensionpack
-code --install-extension shanoor.vscode-nginx
 code --install-extension streetsidesoftware.code-spell-checker
 code --install-extension GraphQL.vscode-graphql
 code --install-extension hashicorp.terraform
-code --install-extension JuanBlanco.solidity
-code --install-extension silvenon.mdx
+code --install-extension unifiedhs.vscode-mdx
 code --install-extension zhuangtongfa.material-theme
+code --install-extension NomicFoundation.hardhat-solidity

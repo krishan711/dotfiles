@@ -1,24 +1,25 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # <xbar.title>Amazon SQS Queue Status</xbar.title>
 # <xbar.version>v1.0</xbar.version>
 # <xbar.author>Kiba Labs</xbar.author>
 # <xbar.author.github>kibalabs</xbar.author.github>
 # <xbar.dependencies>awscli,jq</xbar.dependencies>
 
+# TODO(krishan711): make this a parameter
+aws_profile=kiba
+
 echo "☰"
 echo "---"
 
-export PATH="$PATH:/usr/local/bin"
+source ~/.bash_profile 1> /dev/null
 
-AWS_PROFILE="kiba"
-export AWS_PROFILE
+QUEUE_URLS=$(aws --profile $aws_profile sqs list-queues | jq -r .QueueUrls | jq '.[]')
 
-QUEUE_URLS=$(aws sqs list-queues | jq -r .QueueUrls | jq '.[]')
 for QUEUE_URL in $QUEUE_URLS; do
     queueUrl=$(echo $QUEUE_URL | cut -d '"' -f 2)
     queueName=$(echo "${queueUrl##*/}")
 
-    attributes=$(aws sqs get-queue-attributes \
+    attributes=$(aws sqs --profile $aws_profile get-queue-attributes \
         --queue-url "$queueUrl" \
         --attribute-names ApproximateNumberOfMessages ApproximateNumberOfMessagesNotVisible \
         | jq .Attributes)

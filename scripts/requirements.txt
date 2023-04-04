@@ -1,6 +1,7 @@
+awscli==1.27.61
 click==7.1.2
 requests==2.25.1
 wheel==0.36.2
 asyncclick==7.1.2.3
-pynacl==1.4.0
+web3==6.0.0-beta.8
 kiba-core[queues, requester]==0.2.0

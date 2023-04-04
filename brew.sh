@@ -80,23 +80,23 @@ brew install woff2
 # brew install xz
 
 # Install other useful binaries.
-# brew install ack
-# brew install exiv2
-# brew install git
-# brew install git-lfs
+brew install ack
+# #brew install exiv2
+brew install git
+brew install git-lfs
 # brew install gs
-# brew install imagemagick --with-webp
-# brew install lua
-# brew install lynx
-# brew install p7zip
-# brew install pigz
-# brew install pv
-# brew install rename
-# brew install rlwrap
-# brew install ssh-copy-id
-# brew install tree
-# brew install vbindiff
-# brew install zopfli
+brew install imagemagick
+brew install lua
+brew install lynx
+brew install p7zip
+brew install pigz
+brew install pv
+brew install rename
+brew install rlwrap
+brew install ssh-copy-id
+brew install tree
+brew install vbindiff
+brew install zopfli
 
 # Custom installs
 brew install python
@@ -105,11 +105,11 @@ brew install direnv
 brew install libmagic
 brew install cairo
 brew install pkg-config
-brew install imagemagick
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
 brew install golang
 brew install jq
+brew install --cask ngrok
 
 # Remove outdated versions from the cellar.
 brew cleanup

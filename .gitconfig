@@ -99,6 +99,7 @@
 	# https://git-scm.com/docs/git-update-index#_untracked_cache
 	untrackedCache = true
 
+	# Make sure git doesnt ignore cases
 	ignorecase = false
 
 [color]
@@ -193,10 +194,11 @@
 
 	defaultBranch = main
 
-[user]
-
-	email = krishan711@gmail.com
-
 [pull]
 
 	rebase = false
+
+# Custom for krishan711
+[user]
+
+	email = krishan711@gmail.com

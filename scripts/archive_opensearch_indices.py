@@ -8,7 +8,7 @@ from core.util import date_util
 from core.aws_requester import AwsRequester
 
 
-OPENSEARCH_URL = 'https://vpc-kiba-rkk4bu4zsta75p5tl4ucwpgbje.eu-west-1.es.amazonaws.com'
+OPENSEARCH_URL = 'https://vpc-kiba-logs-iz46qlwv7gq2xvvtrtlduv4lbq.eu-west-1.es.amazonaws.com'
 
 async def post():
     requester = Requester()

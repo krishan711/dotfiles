@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # <xbar.title>Timezones</xbar.title>
 # <xbar.version>v1.0</xbar.version>
 # <xbar.author>Kiba Labs</xbar.author>

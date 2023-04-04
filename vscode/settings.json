@@ -2,7 +2,6 @@
     "workbench.colorTheme": "One Dark Pro",
     "window.title": "${activeEditorLong}${separator}${rootName}",
     "files.autoSave": "afterDelay",
-    "files.autoSaveDelay": 1,
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
@@ -19,7 +18,8 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/.idea": true,
-        "**/__pycache__": true
+        "**/__pycache__": true,
+        "**/.mypy_cache": true
     },
     "terminal.integrated.cursorBlinking": true,
     "python.linting.mypyArgs": [
@@ -29,9 +29,6 @@
         ".env/**/*.py",
         ".vscode/*.py",
         "**/*_pb2.py"
-    ],
-    "python.sortImports.args": [
-        "-sl"
     ],
     "javascript.updateImportsOnFileMove.enabled": "always",
     "typescript.check.npmIsInstalled": false,
@@ -56,7 +53,8 @@
         "editor.tabSize": 2
     },
     "[python]": {
-        "editor.tabSize": 4
+        "editor.tabSize": 4,
+        "editor.formatOnType": true
     },
     "[typescript]": {
         "editor.tabSize": 2
@@ -125,7 +123,7 @@
         "*.ipynb": "jupyter-notebook",
         "*.html": "default"
     },
-    "python.languageServer": "Pylance",
+    "python.languageServer": "Default",
     "python.analysis.extraPaths": [
         "./api/",
         "./client/",
@@ -155,14 +153,22 @@
     "workbench.editor.wrapTabs": true,
     "window.nativeTabs": true,
     "workbench.editor.highlightModifiedTabs": true,
-    "terminal.integrated.enableMultiLinePasteWarning": false,
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.minimumContrastRatio": 1,
     "window.commandCenter": true,
-    "githubPullRequests.pullBranch": "never",
-    "hardhat.telemetry": true,
     "editor.unicodeHighlight.allowedCharacters": {
         "–": true
     },
-    "solidity.telemetry": false
+    "solidity.telemetry": false,
+    "terminal.integrated.profiles.osx": {
+        "bash": {
+            "path": "/opt/homebrew/bin/bash"
+        }
+    },
+    "terminal.external.osxExec": "ITerm2.app",
+    "terminal.integrated.inheritEnv": false,
+    "python.experiments.enabled": false,
+    "python.terminal.activateEnvironment": false,
+    "cSpell.spellCheckDelayMs": 300,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
 }

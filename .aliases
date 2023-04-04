@@ -13,6 +13,7 @@ alias d="cd ~/Documents/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"
+# alias g="git"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -140,6 +141,9 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
+# Reload the shell (i.e. invoke as a login shell)
+# alias reload="exec ${SHELL} -l"
+
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
@@ -185,7 +189,7 @@ alias gbcn='echo "Please use gsn instead"; git switch -c'
 
 # Random
 alias rm-orig='rm **/*.orig'
-alias reload='source ~/.bash_profile'
+alias reload='exec ${SHELL} -l; source ~/.bash_profile'
 alias insomnia='caffeinate -dimsu'
 alias rm-dsstore='find . -name .DS_Store -type f -exec rm {} \;'
 alias myip='ifconfig en0 | grep inet | awk '\''{ print $2 }'\'''

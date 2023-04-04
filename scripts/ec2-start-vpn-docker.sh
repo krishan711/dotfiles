@@ -24,7 +24,7 @@ OPENVPN_DATA='/etc/openvpn-data'
 docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full $CLIENTNAME nopass
 docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_getclient $CLIENTNAME > $CLIENTNAME.ovpn
 sed -i '/redirect-gateway def1/# redirect-gateway def1' $CLIENTNAME.ovpn
-echo "allow-pull-fqdn" >> $CLIENTNAME.ovpn
+echo "# allow-pull-fqdn" >> $CLIENTNAME.ovpn
 echo "route-nopull" >> $CLIENTNAME.ovpn
 # NOTE(krishan711): this is specific to kiba's VPC (172.31.0.0/16)
 echo "route 172.31.255.255 255.255.0.0" >> $CLIENTNAME.ovpn
