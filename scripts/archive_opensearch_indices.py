@@ -16,6 +16,7 @@ async def post():
     awsRequester = AwsRequester(accessKeyId=os.environ['AWS_KEY'], accessKeySecret=os.environ['AWS_SECRET'])
     slackClient = SlackClient(webhookUrl=os.environ['SLACK_WEBHOOK_URL'], requester=requester, defaultSender='worker', defaultChannel='kiba-dev')
 
+    # NOTE(krishan711): this required some updates to the aws_requester
     # await awsRequester.make_request(method='PUT', url=f'{OPENSEARCH_URL}/_snapshot/kiba-logs', dataDict={
     #     "type": "s3",
     #     "settings": {
@@ -23,7 +24,7 @@ async def post():
     #         "region": "eu-west-1",
     #         "role_arn": "arn:aws:iam::097520841056:role/opensearch-snapshot-role"
     #     }
-    # }, headers={'Content-Type': 'application/json'}, service='es', region='eu-west-1')
+    # }, headers={'Content-Type': 'application/json'})
 
     indicesResponse = await requester.get(f'{OPENSEARCH_URL}/logstash-*')
     indicesJson = indicesResponse.json()
