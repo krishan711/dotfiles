@@ -1,8 +1,13 @@
+# Put this in ~/.bash_profile
+# export DOTFILES_PATH='/Users/krishan/Projects/dotfiles'
+# source $DOTFILES_PATH/.bash_profile
+
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
 export PATH="/usr/local/sbin:$PATH";
 export PATH="/opt/homebrew/bin:$PATH";
-export DOTFILES_PATH='/Users/krishan/Projects/dotfiles'
+export PATH="/opt/homebrew/sbin:$PATH";
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH";
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -83,3 +88,6 @@ export GOPATH=~/.go
 
 # Solana
 export PATH=$PATH:~/.local/share/solana/install/active_release/bin
+
+# Aws cli2
+alias aws2=''

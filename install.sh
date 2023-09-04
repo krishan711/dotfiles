@@ -15,7 +15,7 @@ cp $(pwd)/.gitconfig ~
 cp $(pwd)/.inputrc ~
 cp $(pwd)/.screenrc ~
 cp $(pwd)/.bashrc ~
-cp $(pwd)/.bash_profile ~
+# cp $(pwd)/.bash_profile ~
 
 source ~/.bash_profile
 

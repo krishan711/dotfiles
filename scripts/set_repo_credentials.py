@@ -17,14 +17,17 @@ def _encrypt_secret(publicKey: str, value: str) -> str:
     return b64encode(encrypted).decode("utf-8")
 
 
-def set_repo_credentials(organization: str, repoName: str, githubApiToken: str) -> None:
-    logging.info(f'Updating GitHub repo: {organization}/{repoName}')
+def set_repo_credentials(organization: str, repoName: str, server: str, githubApiToken: str) -> None:
+    logging.info(f'Updating GitHub repo: {organization}/{repoName} to include {server}')
+
+    server = server.upper().replace('-', '_')
+    if not os.environ.get(f'{server}_URL'):
+        raise Exception(f'You must set the environment variables for server: {server}')
 
     githubHeaders = {
         'Accept': 'application/vnd.github.v3.full+json',
         'Authorization': f'token {githubApiToken}',
     }
-
     response = requests.get(url=f'https://api.github.com/repos/{organization}/{repoName}/actions/secrets/public-key', headers=githubHeaders)
     response.raise_for_status()
     responseJson = response.json()
@@ -40,22 +43,10 @@ def set_repo_credentials(organization: str, repoName: str, githubApiToken: str) 
     file_util.remove_file_sync(f'github-actions-{repoName}')
 
     secrets = {
-        'APIBOX_URL': _encrypt_secret(publicKey=key, value=os.environ['APIBOX_URL']),
-        'APIBOX_PORT': _encrypt_secret(publicKey=key, value=os.environ['APIBOX_PORT']),
-        'APIBOX_USER': _encrypt_secret(publicKey=key, value=os.environ['APIBOX_USER']),
-        'APIBOX_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
-        'WORKERBOX_URL': _encrypt_secret(publicKey=key, value=os.environ['WORKERBOX_URL']),
-        'WORKERBOX_PORT': _encrypt_secret(publicKey=key, value=os.environ['WORKERBOX_PORT']),
-        'WORKERBOX_USER': _encrypt_secret(publicKey=key, value=os.environ['WORKERBOX_USER']),
-        'WORKERBOX_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
-        'CERTBOX_URL': _encrypt_secret(publicKey=key, value=os.environ['CERTBOX_URL']),
-        'CERTBOX_PORT': _encrypt_secret(publicKey=key, value=os.environ['CERTBOX_PORT']),
-        'CERTBOX_USER': _encrypt_secret(publicKey=key, value=os.environ['CERTBOX_USER']),
-        'CERTBOX_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
-        'MDTPBOX_URL': _encrypt_secret(publicKey=key, value=os.environ['MDTPBOX_URL']),
-        'MDTPBOX_PORT': _encrypt_secret(publicKey=key, value=os.environ['MDTPBOX_PORT']),
-        'MDTPBOX_USER': _encrypt_secret(publicKey=key, value=os.environ['MDTPBOX_USER']),
-        'MDTPBOX_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
+        f'{server}_URL': _encrypt_secret(publicKey=key, value=os.environ[f'{server}_URL']),
+        f'{server}_PORT': _encrypt_secret(publicKey=key, value=os.environ[f'{server}_PORT']),
+        f'{server}_USER': _encrypt_secret(publicKey=key, value=os.environ[f'{server}_USER']),
+        f'{server}_SSH_KEY': _encrypt_secret(publicKey=key, value=privateSshKey),
     }
 
     for secretName, secretValue in secrets.items():
@@ -65,7 +56,7 @@ def set_repo_credentials(organization: str, repoName: str, githubApiToken: str) 
         }))
         response.raise_for_status()
 
-    logging.info(f'save this to apibox and/or workerbox and/or certbox:')
+    logging.info(f'save this to {server}:')
     logging.info(publicSshKey)
 
 
@@ -73,10 +64,11 @@ def set_repo_credentials(organization: str, repoName: str, githubApiToken: str) 
 @click.option('-o', '--organization', 'organization', required=True, type=str, default='krishan711')
 @click.option('-n', '--name', 'repoName', required=True, type=str)
 @click.option('-g', '--github-api-token', 'githubApiToken', required=True, type=str, default=lambda: os.environ['GITHUB_TOKEN'], show_default='GITHUB_TOKEN in your environment variables')
+@click.option('-s', '--server', 'server', required=True, type=str)
 @click.option('-v', '--verbose', 'verbose', required=False, is_flag=True, default=False)
-def run(organization: str, repoName: str, verbose: bool, githubApiToken: str):
+def run(organization: str, repoName: str, verbose: bool, server: str, githubApiToken: str):
     logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
-    set_repo_credentials(organization=organization, repoName=repoName, githubApiToken=githubApiToken)
+    set_repo_credentials(organization=organization, repoName=repoName, server=server, githubApiToken=githubApiToken)
 
 if __name__ == '__main__':
     run()

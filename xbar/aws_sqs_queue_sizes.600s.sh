@@ -6,7 +6,7 @@
 # <xbar.dependencies>awscli,jq</xbar.dependencies>
 
 # TODO(krishan711): make this a parameter
-aws_profile=kiba
+aws_profile=tokenpage
 
 echo "☰"
 echo "---"
