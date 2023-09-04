@@ -1,46 +1,45 @@
-# Initialise
-# NOTE(krishan711): only run this once!
+OPENVPN_DATA=/home/ec2-user/openvpn-data
+OPENVPN_CONTAINER_NAME=openvpn
 
-OPENVPN_DATA='/etc/openvpn-data'
+# for kiba (10.17.0.0/16)
+OPENVPN_ADDRESS=udp://vpn2.kiba.dev
+OPENVPN_ROUTE=10.17.0.0
+# for tokenpage (172.31.0.0/16)
+OPENVPN_ADDRESS=udp://vpn.tokenpage.xyz
+OPENVPN_ROUTE=172.31.0.0
 
-docker run -v $OPENVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u udp://vpn.kiba.dev
-docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
+# Initialise (only run this once!)
+
+sudo rm -rf $OPENVPN_DATA
+docker run --rm -v $OPENVPN_DATA:/etc/openvpn kylemanna/openvpn ovpn_genconfig -d -N -u $OPENVPN_ADDRESS
+docker run --rm -v $OPENVPN_DATA:/etc/openvpn -it kylemanna/openvpn ovpn_initpki
 
 # Run
 
-NAME='openvpn'
-OPENVPN_DATA='/etc/openvpn-data'
-
-docker stop $NAME || true
-docker rm $NAME || true
-docker run -v $OPENVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN --name $NAME kylemanna/openvpn
-
-# Generate
-
-CLIENTNAME=$1
-OPENVPN_DATA='/etc/openvpn-data'
-
-# NOTE(krishan711): run these one at a time
-docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full $CLIENTNAME nopass
-docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_getclient $CLIENTNAME > $CLIENTNAME.ovpn
-sed -i '/redirect-gateway def1/# redirect-gateway def1' $CLIENTNAME.ovpn
-echo "# allow-pull-fqdn" >> $CLIENTNAME.ovpn
-echo "route-nopull" >> $CLIENTNAME.ovpn
-# NOTE(krishan711): this is specific to kiba's VPC (172.31.0.0/16)
-echo "route 172.31.255.255 255.255.0.0" >> $CLIENTNAME.ovpn
-
-rsync certbox:~/$CLIENTNAME.ovpn ~/Downloads
+docker stop $OPENVPN_CONTAINER_NAME || true
+docker rm $OPENVPN_CONTAINER_NAME || true
+docker run -v $OPENVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN --name $OPENVPN_CONTAINER_NAME kylemanna/openvpn
 
 # List
 
-OPENVPN_DATA='/etc/openvpn-data'
 docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_listclients
 
-# Revoke
+# Generate (run these one at a time)
 
 CLIENTNAME=$1
-OPENVPN_DATA='/etc/openvpn-data'
+docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full $CLIENTNAME nopass
+docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn ovpn_getclient $CLIENTNAME > $CLIENTNAME.ovpn
+sed -i s/redirect-gateway\ def1/#redirect-gateway\ def1/ $CLIENTNAME.ovpn
+echo "# allow-pull-fqdn" >> $CLIENTNAME.ovpn
+echo "route-nopull" >> $CLIENTNAME.ovpn
+echo "route $OPENVPN_ROUTE 255.255.0.0" >> $CLIENTNAME.ovpn
 
+# to download, on target computer:
+rsync $BOXNAME:~/$CLIENTNAME.ovpn ~/Downloads
+
+# Revoke (run these one at a time)
+
+CLIENTNAME=$1
 docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa revoke $CLIENTNAME
 docker run -v $OPENVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa gen-crl
 sudo cp $OPENVPN_DATA/pki/crl.pem $OPENVPN_DATA/crl.pem

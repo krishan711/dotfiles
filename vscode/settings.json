@@ -22,14 +22,6 @@
         "**/.mypy_cache": true
     },
     "terminal.integrated.cursorBlinking": true,
-    "python.linting.mypyArgs": [
-        "--follow-imports=silent"
-    ],
-    "python.linting.ignorePatterns": [
-        ".env/**/*.py",
-        ".vscode/*.py",
-        "**/*_pb2.py"
-    ],
     "javascript.updateImportsOnFileMove.enabled": "always",
     "typescript.check.npmIsInstalled": false,
     "extensions.ignoreRecommendations": true,
@@ -68,6 +60,9 @@
     "[tf]": {
         "editor.tabSize": 2
     },
+    "[terraform]": {
+        "editor.tabSize": 2
+    },
     "editor.tabSize": 4,
     "editor.suggestSelection": "first",
     "cSpell.userWords": [
@@ -96,6 +91,7 @@
         "krish",
         "krishan",
         "krupali",
+        "leaderboard",
         "looksrare",
         "merkletreejs",
         "metadatas",
@@ -171,4 +167,12 @@
     "python.terminal.activateEnvironment": false,
     "cSpell.spellCheckDelayMs": 300,
     "editor.unicodeHighlight.ambiguousCharacters": false,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "editor.inlineSuggest.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": true,
+        "markdown": true,
+        "scminput": false
+    }
 }

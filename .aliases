@@ -185,6 +185,7 @@ alias gpp='if git rev-parse --abbrev-ref --symbolic-full-name @{u}; then git pul
 alias gcepp='gce; gpp'
 alias gs='git switch'
 alias gsn='git switch -c'
+alias gsm='gs main && gp && gbds'
 alias gbcn='echo "Please use gsn instead"; git switch -c'
 
 # Random

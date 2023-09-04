@@ -1,4 +1,4 @@
-resource "aws_iam_policy" "read_from_storage" {
+ACLresource "aws_iam_policy" "read_from_storage" {
   name = "read-s3-${aws_s3_bucket.storage.bucket}"
   policy = jsonencode({
     "Version" = "2012-10-17",
