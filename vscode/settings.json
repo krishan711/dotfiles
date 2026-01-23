@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "One Dark Pro",
+    "workbench.colorTheme": "One Dark Pro Night Flat",
     "window.title": "${activeEditorLong}${separator}${rootName}",
     "files.autoSave": "afterDelay",
     "files.trimTrailingWhitespace": true,
@@ -29,7 +29,6 @@
     "typescript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDelete": false,
     "workbench.editor.enablePreview": false,
-    "workbench.iconTheme": "vscode-icons",
     "vsicons.dontShowNewVersionMessage": true,
     "editor.fontLigatures": false,
     "[javascript]": {
@@ -167,12 +166,7 @@
     "python.terminal.activateEnvironment": false,
     "cSpell.spellCheckDelayMs": 300,
     "editor.unicodeHighlight.ambiguousCharacters": false,
-    "terminal.integrated.enableMultiLinePasteWarning": false,
-    "editor.inlineSuggest.enabled": true,
-    "github.copilot.enable": {
-        "*": true,
-        "plaintext": true,
-        "markdown": true,
-        "scminput": false
-    }
+    "workbench.preferredDarkColorTheme": "One Dark Pro Darker",
+    "workbench.iconTheme": "vscode-icons",
+    "oneDarkPro.editorTheme": "One Dark Pro Darker",
 }
