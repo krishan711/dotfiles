@@ -113,11 +113,13 @@ if [[ "$OS" == "Darwin" ]]; then
     # macOS VS Code settings location
     if [ -d "$HOME/Library/Application Support/Code" ]; then
         ln -f -s $DOTFILES_PATH/vscode/settings.json "$HOME/Library/Application Support/Code/User/settings.json"
+        ln -f -s $DOTFILES_PATH/vscode/keybindings.json "$HOME/Library/Application Support/Code/User/keybindings.json"
     fi
 elif [[ "$OS" == "Linux" ]]; then
     # Linux VS Code settings location
     if [ -d "$HOME/.config/Code/User" ]; then
         ln -f -s $DOTFILES_PATH/vscode/settings.json "$HOME/.config/Code/User/settings.json"
+        ln -f -s $DOTFILES_PATH/vscode/keybindings.json "$HOME/.config/Code/User/keybindings.json"
     fi
 fi
 

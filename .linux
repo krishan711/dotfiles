@@ -45,9 +45,11 @@ if command -v gsettings &> /dev/null; then
     # Disable hot corner
     gsettings set org.gnome.desktop.interface enable-hot-corners false
 
-    # Keyboard repeat rate (faster typing)
-    gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 30
-    gsettings set org.gnome.desktop.peripherals.keyboard delay 250
+    # Keyboard repeat rate (fast like macOS)
+    # delay: time before repeat starts (ms) - lower = faster start
+    # repeat-interval: time between repeats (ms) - lower = faster repeat
+    gsettings set org.gnome.desktop.peripherals.keyboard delay 200
+    gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 15
 
     # Natural scrolling (like macOS) - uncomment if desired
     # gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
@@ -77,13 +79,13 @@ fi
 
 if command -v kwriteconfig5 &> /dev/null; then
     echo "Configuring KDE Plasma settings..."
-    
+
     # Disable animations
     kwriteconfig5 --file kwinrc --group Compositing --key AnimationSpeed 0
-    
+
     # Single-click to open files (like macOS)
     kwriteconfig5 --file kdeglobals --group KDE --key SingleClick true
-    
+
     echo "KDE Plasma settings configured."
 fi
 
