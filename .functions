@@ -262,3 +262,11 @@ function pypi-version() {
 function b64() {
 	echo -n "$1" | base64
 }
+
+function clean-dev-folder() {
+	find . -type d -name '.env' -exec rm -rf {} +
+	find . -type d -name '.mypy_cache' -exec rm -rf {} +
+	find . -type d -name '__pycache__' -exec rm -rf {} +
+	find . -type d -name 'node_modules' -exec rm -rf {} +
+	find . -type d -name '.terraform' -exec rm -rf {} +
+}

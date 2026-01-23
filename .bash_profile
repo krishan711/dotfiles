@@ -4,10 +4,14 @@
 
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
+export PATH="/usr/local/bin:$PATH";
 export PATH="/usr/local/sbin:$PATH";
 export PATH="/opt/homebrew/bin:$PATH";
 export PATH="/opt/homebrew/sbin:$PATH";
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH";
+export JAVA_HOME=/opt/homebrew/opt/openjdk@17
+export PATH="$JAVA_HOME/bin:$PATH";
+export PATH="/Users/krishan/.local/bin:$PATH";
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -88,6 +92,12 @@ export GOPATH=~/.go
 
 # Solana
 export PATH=$PATH:~/.local/share/solana/install/active_release/bin
+
+# NVM
+mkdir -p ~/.nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Aws cli2
 alias aws2=''

@@ -52,7 +52,7 @@ KIBA_LABELS = [{
 }]
 
 
-def create_github_repo(organization: str, name: str, githubApiToken: str) -> None:
+def create_github_repo(organization: str, name: str, isPublic: bool, githubApiToken: str) -> None:
     logging.info(f'Updating GitHub repo: {organization}/{name}')
     githubHeaders = {
         'Accept': 'application/vnd.github.v3.full+json',
@@ -83,17 +83,24 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
         shutil.rmtree(repoDirectory, ignore_errors=True)
 
     # Update settings
+    logging.info(f'Updating repo settings')
     response = requests.patch(url=f'https://api.github.com/repos/{organization}/{name}', headers=githubHeaders, data=json.dumps({
         'name': name,
         'has_wiki': False,
         'has_issues': True,
+        'private': not isPublic,
         'has_projects': False,
         'default_branch': primaryBranch,
         'allow_rebase_merge': False,
         'allow_squash_merge': True,
+        'squash_merge_commit_title': 'PR_TITLE',
+        'squash_merge_commit_message': 'BLANK',
         'allow_merge_commit': False,
+        'allow_auto_merge': False,
         'delete_branch_on_merge': True,
+        'allow_update_branch': True,
         'description': '',
+        'auto_init': True,
     }))
     response.raise_for_status()
 
@@ -113,18 +120,19 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
         for labelName in toAdd:
             requests.post(url=f'https://api.github.com/repos/{organization}/{name}/labels', headers=githubHeaders, data=json.dumps(kibaNameLabelMap[labelName])).raise_for_status()
     toUpdate = set(kibaNameLabelMap.keys()).intersection(set(repoNameLabelMap.keys()))
-    if toUpdate:
-        logging.info(f'Updating {len(toUpdate)} labels')
-        for labelName in toUpdate:
-            oldLabel = repoNameLabelMap[labelName]
-            newLabel = kibaNameLabelMap[labelName]
-            requests.patch(url=f'https://api.github.com/repos/{organization}/{name}/labels/{oldLabel["name"]}', headers=githubHeaders, data=json.dumps({
-                'new_name': newLabel['name'],
-                'color': newLabel['color'],
-                'description': newLabel['description'],
-            })).raise_for_status()
+    # if toUpdate:
+    #     logging.info(f'Updating {len(toUpdate)} labels')
+    #     for labelName in toUpdate:
+    #         oldLabel = repoNameLabelMap[labelName]
+    #         newLabel = kibaNameLabelMap[labelName]
+    #         requests.patch(url=f'https://api.github.com/repos/{organization}/{name}/labels/{oldLabel["name"]}', headers=githubHeaders, data=json.dumps({
+    #             'new_name': newLabel['name'],
+    #             'color': newLabel['color'],
+    #             'description': newLabel['description'],
+    #         })).raise_for_status()
 
     # Update protected branches
+    logging.info(f'Updating protected branches')
     response = requests.put(url=f'https://api.github.com/repos/{organization}/{name}/branches/{primaryBranch}/protection', headers=githubHeaders, data=json.dumps({
         'required_pull_request_reviews': {
             'require_code_owner_reviews': True
@@ -144,8 +152,7 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
     try:
         response.raise_for_status()
     except Exception as exception:
-        print(f'Error: {response.text}')
-        raise exception
+        print(f'Failed to protect branch: {response.text}')
 
     # Update security settings
     # requests.delete(url=f'https://api.github.com/repos/{organization}/{name}/automated-security-fixes', headers=githubHeadersLokiPreview).raise_for_status()
@@ -153,11 +160,12 @@ def create_github_repo(organization: str, name: str, githubApiToken: str) -> Non
 @click.command()
 @click.option('-o', '--organization', 'organization', required=True, type=str, default='krishan711')
 @click.option('-n', '--name', 'name', required=True, type=str)
+@click.option('-p', '--public', 'isPublic', required=False, is_flag=True)
 @click.option('-g', '--github-api-token', 'githubApiToken', required=True, type=str, default=lambda: os.environ['GITHUB_TOKEN'], show_default='GITHUB_TOKEN in your environment variables')
 @click.option('-v', '--verbose', 'verbose', required=False, is_flag=True, default=False)
-def run(organization: str, name: str, verbose: bool, githubApiToken: str):
+def run(organization: str, name: str, isPublic: bool, verbose: bool, githubApiToken: str):
     logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
-    create_github_repo(organization=organization, name=name, githubApiToken=githubApiToken)
+    create_github_repo(organization=organization, name=name, isPublic=isPublic, githubApiToken=githubApiToken)
 
 if __name__ == '__main__':
     run()

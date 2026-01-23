@@ -1,25 +1,28 @@
 {
+<<<<<<< Updated upstream
     "workbench.colorTheme": "One Dark Pro Night Flat",
+=======
+>>>>>>> Stashed changes
     "window.title": "${activeEditorLong}${separator}${rootName}",
     "files.autoSave": "afterDelay",
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
-    "diffEditor.ignoreTrimWhitespace": false,
     "editor.insertSpaces": true,
     "editor.fontFamily": "'SF Mono', Menlo, Monaco, 'Courier New', monospace",
     "editor.renderWhitespace": "boundary",
     "editor.fontSize": 12,
     "explorer.openEditors.visible": 0,
     "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/.idea": true,
         "**/__pycache__": true,
-        "**/.mypy_cache": true
+        "**/.data": true,
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.idea": true,
+        "**/.mypy_cache": true,
+        "**/.svn": true,
+        "**/CVS": true
     },
     "terminal.integrated.cursorBlinking": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
@@ -28,14 +31,19 @@
     "explorer.confirmDragAndDrop": false,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDelete": false,
+<<<<<<< Updated upstream
     "workbench.editor.enablePreview": false,
+=======
+    "workbench.iconTheme": "vscode-icons",
+>>>>>>> Stashed changes
     "vsicons.dontShowNewVersionMessage": true,
     "editor.fontLigatures": false,
     "[javascript]": {
         "editor.tabSize": 2
     },
     "[solidity]": {
-        "editor.tabSize": 4
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
     },
     "[javascriptreact]": {
         "editor.tabSize": 2
@@ -46,6 +54,9 @@
     "[python]": {
         "editor.tabSize": 4,
         "editor.formatOnType": true
+    },
+    "[scss]": {
+        "editor.tabSize": 2
     },
     "[typescript]": {
         "editor.tabSize": 2
@@ -66,6 +77,7 @@
     "editor.suggestSelection": "first",
     "cSpell.userWords": [
         "arkera",
+        "bioportrait",
         "bioscore",
         "bioscores",
         "boto",
@@ -99,6 +111,7 @@
         "notd",
         "octokit",
         "ponyfill",
+        "positran",
         "pylint",
         "repos",
         "scrollable",
@@ -106,6 +119,7 @@
         "subatoms",
         "Subpage",
         "theming",
+        "thresholding",
         "tokenpage",
         "tokenpagexyz",
         "tzinfo",
@@ -137,7 +151,7 @@
     "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
     "typescript.inlayHints.parameterTypes.enabled": true,
     "typescript.inlayHints.enumMemberValues.enabled": true,
-    "terminal.integrated.scrollback": 10000,
+    "terminal.integrated.scrollback": 100000,
     "editor.bracketPairColorization.enabled": true,
     "notebook.lineNumbers": "on",
     "workbench.startupEditor": "none",
@@ -150,7 +164,6 @@
     "workbench.editor.highlightModifiedTabs": true,
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.minimumContrastRatio": 1,
-    "window.commandCenter": true,
     "editor.unicodeHighlight.allowedCharacters": {
         "–": true
     },
@@ -169,4 +182,247 @@
     "workbench.preferredDarkColorTheme": "One Dark Pro Darker",
     "workbench.iconTheme": "vscode-icons",
     "oneDarkPro.editorTheme": "One Dark Pro Darker",
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "editor.inlineSuggest.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": true,
+        "markdown": true,
+        "scminput": false
+    },
+    "jupyter.askForKernelRestart": false,
+    "editor.copyWithSyntaxHighlighting": false,
+    "gitlens.currentLine.enabled": false,
+    "gitlens.showWelcomeOnInstall": false,
+    "gitlens.showWhatsNewAfterUpgrades": false,
+    "gitlens.plusFeatures.enabled": false,
+    "gitlens.currentLine.pullRequests.enabled": false,
+    "gitlens.currentLine.scrollable": false,
+    "gitlens.codeLens.authors.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "window.commandCenter": false,
+    "workbench.layoutControl.enabled": false,
+    "window.clickThroughInactive": false,
+    "scm.workingSets.default": "current",
+    "scm.workingSets.enabled": false,
+    "explorer.compactFolders": false,
+    "python.analysis.cacheLSPData": true,
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.autoImportCompletions": true,
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "python.defaultInterpreterPath": "/Users/krishan/Projects/carlistings/.env",
+    "github.copilot.chat.codesearch.enabled": true,
+    "github.copilot.chat.reviewSelection.instructions": [
+        { "file": ".copilot-review-instructions.md" },
+        { "text": "In python, use camelCase for variable and parameter names; use snake_case for function names." },
+        { "text": "In typescript, use camelCase for variable names, parameter names and function names." },
+        { "text": "Don't add new lines unless really needed." },
+        { "text": "Search for and edit existing files unless explicitly asked to create a new file." },
+    ],
+    "github.copilot.chat.editor.temporalContext.enabled": true,
+    "github.copilot.chat.edits.temporalContext.enabled": true,
+    "jupyter.jupyterLaunchTimeout": 600000,
+    "docker.extension.enableComposeLanguageServer": false,
+    "github.copilot.nextEditSuggestions.enabled": false,
+    "pgsql.serverGroups": [
+        {
+            "name": "Servers",
+            "id": "63A04F5B-B12C-4DB8-A8A0-B20A6DB7905F",
+            "isDefault": true
+        }
+    ],
+    "workbench.editor.empty.hint": "hidden",
+    "chat.todoListTool.enabled": true,
+    "github.copilot.chat.agent.thinkingTool": true,
+    "chat.agent.maxRequests": 50,
+    "chat.tools.terminal.autoApprove": {
+        "head": true,
+        "awk": true,
+        "sed": true,
+        "cd": true,
+        "echo": true,
+        "ls": true,
+        "pwd": true,
+        "cat": true,
+        "tail": true,
+        "findstr": true,
+        "wc": true,
+        "tr": true,
+        "cut": true,
+        "cmp": true,
+        "make": true,
+        "source": true,
+        "which": true,
+        "basename": true,
+        "dirname": true,
+        "realpath": true,
+        "readlink": true,
+        "stat": true,
+        "file": true,
+        "du": true,
+        "df": true,
+        "sleep": true,
+        "git status": true,
+        "git log": true,
+        "git show": true,
+        "git diff": true,
+        "Get-ChildItem": true,
+        "Get-Content": true,
+        "Get-Date": true,
+        "Get-Random": true,
+        "Get-Location": true,
+        "Write-Host": true,
+        "Write-Output": true,
+        "Split-Path": true,
+        "Join-Path": true,
+        "Start-Sleep": true,
+        "Where-Object": true,
+        "/^Select-[a-z0-9]/i": true,
+        "/^Measure-[a-z0-9]/i": true,
+        "/^Compare-[a-z0-9]/i": true,
+        "/^Format-[a-z0-9]/i": true,
+        "/^Sort-[a-z0-9]/i": true,
+        "column": true,
+        "/^column\\b.*-c\\s+[0-9]{4,}/": false,
+        "date": true,
+        "/^date\\b.*(-s|--set)\\b/": false,
+        "find": true,
+        "/^find\\b.*-(delete|exec|execdir|fprint|fprintf|fls|ok|okdir)\\b/": false,
+        "grep": true,
+        "/^grep\\b.*-(f|P)\\b/": false,
+        "sort": true,
+        "/^sort\\b.*-(o|S)\\b/": false,
+        "tree": true,
+        "/^tree\\b.*-o\\b/": false,
+        "/\\(.+\\)/": {
+            "approve": false,
+            "matchCommandLine": true
+        },
+        "/\\{.+\\}/": {
+            "approve": false,
+            "matchCommandLine": true
+        },
+        "/`.+`/": {
+            "approve": false,
+            "matchCommandLine": true
+        },
+        "rm": false,
+        "npm link": true,
+        "rmdir": false,
+        "del": false,
+        "Remove-Item": false,
+        "ri": false,
+        "rd": false,
+        "erase": false,
+        "dd": false,
+        "kill": false,
+        "ps": false,
+        "top": false,
+        "Stop-Process": false,
+        "spps": false,
+        "taskkill": false,
+        "taskkill.exe": false,
+        "curl": false,
+        "wget": false,
+        "Invoke-RestMethod": false,
+        "Invoke-WebRequest": false,
+        "irm": false,
+        "iwr": false,
+        "chmod": false,
+        "chown": false,
+        "Set-ItemProperty": false,
+        "sp": false,
+        "Set-Acl": false,
+        "jq": false,
+        "xargs": false,
+        "eval": false,
+        "Invoke-Expression": false,
+        "iex": false,
+        "/\\.envrc/i": {
+            "approve": false,
+            "matchCommandLine": true
+        },
+        "docker exec": true,
+        "docker logs": true,
+        "docker compose": true,
+        "./alembic/create-migration.sh": true,
+        "docker build": true,
+        "forge": true
+    },
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "editor.experimental.asyncTokenizationVerification": true,
+    "mssql.connectionGroups": [
+        {
+            "name": "ROOT",
+            "id": "279B2A10-5E40-4FC0-BE70-752235491D5C"
+        }
+    ],
+    "solidity.packageDefaultDependenciesContractsDirectory": "",
+    "solidity.packageDefaultDependenciesDirectory": "blockchain/lib",
+    "solidity.compileUsingRemoteVersion": "v0.8.24",
+    "solidity.remappings": [
+        "@openzeppelin/contracts/=blockchain/lib/openzeppelin-contracts/contracts/",
+        "forge-std/=blockchain/lib/openzeppelin-contracts/lib/forge-std/src/"
+    ],
+    "solidity.remappingsUnix": [
+        "@openzeppelin/contracts/=blockchain/lib/openzeppelin-contracts/contracts/",
+        "forge-std/=blockchain/lib/openzeppelin-contracts/lib/forge-std/src/"
+    ],
+    "[sql]": {
+        "editor.defaultFormatter": "ms-mssql.mssql"
+    },
+    "terminal.integrated.suggest.enabled": false,
+    "mssql.autoDisableNonTSqlLanguageService": false,
+    "githubPullRequests.createDefaultBaseBranch": "repositoryDefault",
+    "githubPullRequests.defaultMergeMethod": "squash",
+    "githubPullRequests.fileListLayout": "flat",
+    "githubPullRequests.ignoreSubmodules": true,
+    "chat.tools.urls.autoApprove": {
+        "https://0x.org": true,
+        "https://*.aws.amazon.com": true,
+        "https://docs.aws.amazon.com": true,
+        "https://repost.aws": true,
+        "https://*.etherscan.io": true,
+        "https://docs.semble.io": true,
+        "https://github.com": {
+            "approveRequest": false,
+            "approveResponse": true
+        },
+        "https://raw.githubusercontent.com": {
+            "approveRequest": false,
+            "approveResponse": true
+        },
+        "https://www.alchemy.com": true
+    },
+    "synapse.localWorkFolderPath": "/Users/krishan/Projects/agent-hack",
+    "chat.viewSessions.orientation": "stacked",
+    "claudeCode.preferredLocation": "sidebar",
+    "claudeCode.selectedModel": "default",
+    "amp.url": "https://ampcode.com/",
+    "editor.wordBasedSuggestions": "off",
+    "amp.tab.enabled": true,
+    "amp.mcpServers": {
+        "playwright": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@playwright/mcp@latest",
+                "--headless",
+                "--isolated"
+            ]
+        }
+    },
 }

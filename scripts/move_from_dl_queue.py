@@ -1,17 +1,16 @@
 import os
 import logging
-import json
 
-import boto3
 import asyncclick as click
 
 from core.queues.sqs import SqsMessageQueue
 
 @click.command()
 @click.option('-q', '--queue-name', 'queueName', required=True, type=str)
-async def run(queueName: str):
-    workQueue = SqsMessageQueue(region='eu-west-1', accessKeyId=os.environ['AWS_KEY'], accessKeySecret=os.environ['AWS_SECRET'], queueUrl=f'https://sqs.eu-west-1.amazonaws.com/097520841056/{queueName}')
-    workQueueDl = SqsMessageQueue(region='eu-west-1', accessKeyId=os.environ['AWS_KEY'], accessKeySecret=os.environ['AWS_SECRET'], queueUrl=f'https://sqs.eu-west-1.amazonaws.com/097520841056/{queueName}-dl')
+@click.option('-a', '--account-id', 'accountId', required=True, type=str)
+async def run(queueName: str, accountId: str):
+    workQueue = SqsMessageQueue(region='eu-west-1', accessKeyId=os.environ['AWS_ACCESS_KEY_ID'], accessKeySecret=os.environ['AWS_ACCESS_KEY_SECRET'], queueUrl=f'https://sqs.eu-west-1.amazonaws.com/{accountId}/{queueName}')
+    workQueueDl = SqsMessageQueue(region='eu-west-1', accessKeyId=os.environ['AWS_ACCESS_KEY_ID'], accessKeySecret=os.environ['AWS_ACCESS_KEY_SECRET'], queueUrl=f'https://sqs.eu-west-1.amazonaws.com/{accountId}/{queueName}-dl')
 
     await workQueue.connect()
     await workQueueDl.connect()

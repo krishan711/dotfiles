@@ -30,6 +30,9 @@ generated/
 dist/
 build/
 tmp/
+cache/
+artifacts/
+secrets/
 
 # Python
 __pycache__/
@@ -60,3 +63,6 @@ override.tf.json
 *_override.tf.json
 .terraformrc
 terraform.rc
+
+# Solidity
+**/.openzeppelin/*

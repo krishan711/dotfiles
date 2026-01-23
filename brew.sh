@@ -109,6 +109,7 @@ brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
 brew install golang
 brew install jq
+brew install foundry
 
 # Remove outdated versions from the cellar.
 brew cleanup
