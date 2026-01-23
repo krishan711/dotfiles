@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Detect OS for platform-specific aliases
+OS="$(uname -s)"
+
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
@@ -48,26 +51,47 @@ alias sudo='sudo '
 # Get week number
 alias week='date +%V'
 
-# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
-
-# Google Chrome
-alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
-alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
+# System updates - cross-platform
+if [[ "$OS" == "Darwin" ]]; then
+    # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+    alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
+    # Google Chrome (macOS)
+    alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+    alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
+elif [[ "$OS" == "Linux" ]]; then
+    # Linux system updates
+    if command -v apt-get &> /dev/null; then
+        alias update='sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; npm install npm -g; npm update -g'
+    elif command -v dnf &> /dev/null; then
+        alias update='sudo dnf update -y && sudo dnf autoremove -y; npm install npm -g; npm update -g'
+    elif command -v pacman &> /dev/null; then
+        alias update='sudo pacman -Syu; npm install npm -g; npm update -g'
+    fi
+    # Google Chrome (Linux)
+    alias chrome='google-chrome'
+fi
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
+if [[ "$OS" == "Darwin" ]]; then
+    alias localip="ipconfig getifaddr en0"
+elif [[ "$OS" == "Linux" ]]; then
+    alias localip="hostname -I | awk '{print \$1}'"
+fi
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Show active network interfaces
-alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
-
-# Flush Directory Service cache
-alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
-
-# Clean up LaunchServices to remove duplicates in the “Open With” menu
-alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+if [[ "$OS" == "Darwin" ]]; then
+    alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+    # Flush Directory Service cache (macOS)
+    alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+    # Clean up LaunchServices to remove duplicates in the "Open With" menu
+    alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+elif [[ "$OS" == "Linux" ]]; then
+    alias ifactive="ip link show | grep 'state UP'"
+    # Flush DNS cache (Linux - systemd-resolved)
+    alias flush="sudo systemd-resolve --flush-caches 2>/dev/null || sudo resolvectl flush-caches 2>/dev/null || echo 'DNS cache flushed or not applicable'"
+fi
 
 # Canonical hex dump; some systems have this symlinked
 command -v hd > /dev/null || alias hd="hexdump -C"
@@ -84,23 +108,44 @@ jscbin="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources
 unset jscbin;
 
 # Trim new lines and copy to clipboard
-alias c="tr -d '\n' | pbcopy"
+if [[ "$OS" == "Darwin" ]]; then
+    alias c="tr -d '\n' | pbcopy"
+    alias pbpaste='pbpaste'
+elif [[ "$OS" == "Linux" ]]; then
+    # Use xclip or xsel on Linux
+    if command -v xclip &> /dev/null; then
+        alias c="tr -d '\n' | xclip -selection clipboard"
+        alias pbcopy='xclip -selection clipboard'
+        alias pbpaste='xclip -selection clipboard -o'
+    elif command -v xsel &> /dev/null; then
+        alias c="tr -d '\n' | xsel --clipboard --input"
+        alias pbcopy='xsel --clipboard --input'
+        alias pbpaste='xsel --clipboard --output'
+    fi
+fi
 
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
-# Empty the Trash on all mounted volumes and the main HDD.
-# Also, clear Apple’s System Logs to improve shell startup speed.
-# Finally, clear download history from quarantine. https://mths.be/bum
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-
-# Show/hide hidden files in Finder
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+# Empty the Trash
+if [[ "$OS" == "Darwin" ]]; then
+    # macOS: Empty the Trash on all mounted volumes and the main HDD.
+    # Also, clear Apple's System Logs to improve shell startup speed.
+    # Finally, clear download history from quarantine. https://mths.be/bum
+    alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+    # Show/hide hidden files in Finder
+    alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+    alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+elif [[ "$OS" == "Linux" ]]; then
+    # Linux: Empty trash
+    alias emptytrash="rm -rfv ~/.local/share/Trash/*"
+fi
 
 # Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+if [[ "$OS" == "Darwin" ]]; then
+    alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+    alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+fi
 
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
@@ -109,16 +154,17 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 # Usage: `mergepdf input{1,2,3}.pdf`
 alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf'
 
-# Disable Spotlight
-alias spotoff="sudo mdutil -a -i off"
-# Enable Spotlight
-alias spoton="sudo mdutil -a -i on"
-
-# PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
-alias plistbuddy="/usr/libexec/PlistBuddy"
-
-# Airport CLI alias
-alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
+# Spotlight (macOS only)
+if [[ "$OS" == "Darwin" ]]; then
+    # Disable Spotlight
+    alias spotoff="sudo mdutil -a -i off"
+    # Enable Spotlight
+    alias spoton="sudo mdutil -a -i on"
+    # PlistBuddy alias, because sometimes `defaults` just doesn't cut it
+    alias plistbuddy="/usr/libexec/PlistBuddy"
+    # Airport CLI alias
+    alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
+fi
 
 # Intuitive map function
 # For example, to list all directories that contain a certain file:
@@ -131,15 +177,30 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 done
 
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
-alias stfu="osascript -e 'set volume output muted true'"
-alias pumpitup="osascript -e 'set volume output volume 100'"
-
-# Kill all the tabs in Chrome to free up memory
-# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
-alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
-
-# Lock the screen (when going AFK)
-alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+if [[ "$OS" == "Darwin" ]]; then
+    alias stfu="osascript -e 'set volume output muted true'"
+    alias pumpitup="osascript -e 'set volume output volume 100'"
+    # Kill all the tabs in Chrome to free up memory
+    alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+    # Lock the screen (when going AFK)
+    alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+elif [[ "$OS" == "Linux" ]]; then
+    # Volume control (requires pactl/pulseaudio or pipewire)
+    if command -v pactl &> /dev/null; then
+        alias stfu="pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        alias pumpitup="pactl set-sink-volume @DEFAULT_SINK@ 100%"
+    fi
+    # Kill Chrome tabs
+    alias chromekill="ps ux | grep '[c]hrome.*--type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+    # Lock the screen (common Linux desktop environments)
+    if command -v gnome-screensaver-command &> /dev/null; then
+        alias afk="gnome-screensaver-command -l"
+    elif command -v xdg-screensaver &> /dev/null; then
+        alias afk="xdg-screensaver lock"
+    elif command -v loginctl &> /dev/null; then
+        alias afk="loginctl lock-session"
+    fi
+fi
 
 # Reload the shell (i.e. invoke as a login shell)
 # alias reload="exec ${SHELL} -l"
@@ -178,9 +239,17 @@ alias grc='git rebase --continue'
 alias grs='git rebase --skip'
 alias gsl='git stash list'
 alias gss='git stash save'
-alias gob='open "$(gurl)"'
+if [[ "$OS" == "Darwin" ]]; then
+    alias gob='open "$(gurl)"'
+elif [[ "$OS" == "Linux" ]]; then
+    alias gob='xdg-open "$(gurl)"'
+fi
 alias gurl='git remote get-url origin | sed "s|git@github.com:|https://github.com/|g"| sed "s|\.git||g"'
-alias gpo='git push -u origin "$(git rev-parse --abbrev-ref HEAD)" && open "$(gurl)/compare/$(git rev-parse --abbrev-ref HEAD)?expand=1"'
+if [[ "$OS" == "Darwin" ]]; then
+    alias gpo='git push -u origin "$(git rev-parse --abbrev-ref HEAD)" && open "$(gurl)/compare/$(git rev-parse --abbrev-ref HEAD)?expand=1"'
+elif [[ "$OS" == "Linux" ]]; then
+    alias gpo='git push -u origin "$(git rev-parse --abbrev-ref HEAD)" && xdg-open "$(gurl)/compare/$(git rev-parse --abbrev-ref HEAD)?expand=1"'
+fi
 alias gpp='if git rev-parse --abbrev-ref --symbolic-full-name @{u}; then git pull && git push; else gpo; fi'
 alias gcepp='gce; gpp'
 alias gs='git switch'
@@ -190,7 +259,13 @@ alias gbcn='echo "Please use gsn instead"; git switch -c'
 
 # Random
 alias rm-orig='rm **/*.orig'
-alias reload='exec ${SHELL} -l; source ~/.bash_profile'
-alias insomnia='caffeinate -dimsu'
+# Reload the shell - exec replaces the shell so nothing after it runs
+alias reload='exec ${SHELL} -l'
+if [[ "$OS" == "Darwin" ]]; then
+    alias insomnia='caffeinate -dimsu'
+    alias myip='ifconfig en0 | grep inet | awk '\''{ print $2 }'\'''
+elif [[ "$OS" == "Linux" ]]; then
+    alias insomnia='systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target && echo "Sleep disabled. Run: systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target to re-enable"'
+    alias myip='hostname -I | awk '\''{ print $1 }'\'''
+fi
 alias rm-dsstore='find . -name .DS_Store -type f -exec rm {} \;'
-alias myip='ifconfig en0 | grep inet | awk '\''{ print $2 }'\'''

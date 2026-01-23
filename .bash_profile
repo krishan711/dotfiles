@@ -1,17 +1,44 @@
 # Put this in ~/.bash_profile
-# export DOTFILES_PATH='/Users/krishan/Projects/dotfiles'
+# export DOTFILES_PATH='/Users/krishan/Projects/dotfiles'  # macOS
+# export DOTFILES_PATH='/home/krishan/Projects/dotfiles'   # Linux
 # source $DOTFILES_PATH/.bash_profile
+
+# Detect OS
+OS="$(uname -s)"
 
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
 export PATH="/usr/local/bin:$PATH";
 export PATH="/usr/local/sbin:$PATH";
-export PATH="/opt/homebrew/bin:$PATH";
-export PATH="/opt/homebrew/sbin:$PATH";
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH";
-export JAVA_HOME=/opt/homebrew/opt/openjdk@17
-export PATH="$JAVA_HOME/bin:$PATH";
 export PATH="/Users/krishan/.local/bin:$PATH";
+export PATH="$HOME/.local/bin:$PATH";
+export PATH="/usr/local/sbin:$PATH";
+
+# macOS-specific paths
+if [[ "$OS" == "Darwin" ]]; then
+    export PATH="/opt/homebrew/bin:$PATH";
+    export PATH="/opt/homebrew/sbin:$PATH";
+    export PATH="/opt/homebrew/opt/libpq/bin:$PATH";
+    export PATH="/opt/homebrew/opt/libpq/bin:$PATH";
+    export JAVA_HOME=/opt/homebrew/opt/openjdk@17
+    export PATH="$JAVA_HOME/bin:$PATH";
+fi
+
+# Linux-specific paths
+if [[ "$OS" == "Linux" ]]; then
+    # Snap packages
+    if [ -d "/snap/bin" ]; then
+        export PATH="/snap/bin:$PATH";
+    fi
+    # Flatpak
+    if [ -d "/var/lib/flatpak/exports/bin" ]; then
+        export PATH="/var/lib/flatpak/exports/bin:$PATH";
+    fi
+    # User flatpak
+    if [ -d "$HOME/.local/share/flatpak/exports/bin" ]; then
+        export PATH="$HOME/.local/share/flatpak/exports/bin:$PATH";
+    fi
+fi
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -38,13 +65,21 @@ for option in autocd globstar; do
 done;
 
 # Add tab completion for many Bash commands
-if which brew &> /dev/null && [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
-	# Ensure existing Homebrew v1 completions continue to work
-	export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d";
-	source "$(brew --prefix)/etc/profile.d/bash_completion.sh";
-elif [ -f /etc/bash_completion ]; then
-	source /etc/bash_completion;
-fi;
+if [[ "$OS" == "Darwin" ]]; then
+    # macOS with Homebrew
+    if which brew &> /dev/null && [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
+        # Ensure existing Homebrew v1 completions continue to work
+        export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d";
+        source "$(brew --prefix)/etc/profile.d/bash_completion.sh";
+    fi
+elif [[ "$OS" == "Linux" ]]; then
+    # Linux bash completion
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        source /usr/share/bash-completion/bash_completion;
+    elif [ -f /etc/bash_completion ]; then
+        source /etc/bash_completion;
+    fi
+fi
 
 # Enable tab completion for `g` by marking it as an alias for `git`
 if type _git &> /dev/null; then
@@ -56,10 +91,12 @@ fi;
 
 # Add tab completion for `defaults read|write NSGlobalDomain`
 # You could just use `-g` instead, but I like being explicit
-complete -W "NSGlobalDomain" defaults;
-
-# Add `killall` tab completion for common apps
-complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
+# (macOS only)
+if [[ "$OS" == "Darwin" ]]; then
+    complete -W "NSGlobalDomain" defaults;
+    # Add `killall` tab completion for common apps
+    complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
+fi
 
 # setup npm to use local "global" packages (https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md)
 export NPM_PACKAGES_ROOT=$HOME/.npm-packages
@@ -72,8 +109,16 @@ export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath)
 npm config set ignore-scripts true
 
 # Create symlink between vscode settings in this repo and on local device
-if [ -x $HOME/Library/Application\ Support/Code ]; then
-    ln -f -s $DOTFILES_PATH/vscode/settings.json $HOME/Library/Application\ Support/Code/User/settings.json
+if [[ "$OS" == "Darwin" ]]; then
+    # macOS VS Code settings location
+    if [ -d "$HOME/Library/Application Support/Code" ]; then
+        ln -f -s $DOTFILES_PATH/vscode/settings.json "$HOME/Library/Application Support/Code/User/settings.json"
+    fi
+elif [[ "$OS" == "Linux" ]]; then
+    # Linux VS Code settings location
+    if [ -d "$HOME/.config/Code/User" ]; then
+        ln -f -s $DOTFILES_PATH/vscode/settings.json "$HOME/.config/Code/User/settings.json"
+    fi
 fi
 
 # Load passwords

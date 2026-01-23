@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+
+# ~/.linux — Linux-specific system configuration
+# Similar to .macos but for Linux desktop environments
+
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until this script has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+###############################################################################
+# General Settings                                                            #
+###############################################################################
+
+# Set timezone (uncomment and modify as needed)
+# sudo timedatectl set-timezone America/New_York
+
+# Enable NTP time synchronization
+sudo timedatectl set-ntp true
+
+###############################################################################
+# GNOME Settings (if using GNOME desktop)                                     #
+###############################################################################
+
+if command -v gsettings &> /dev/null; then
+    echo "Configuring GNOME settings..."
+
+    # Disable animations for snappier feel
+    gsettings set org.gnome.desktop.interface enable-animations false
+
+    # Show battery percentage
+    gsettings set org.gnome.desktop.interface show-battery-percentage true
+
+    # Set dark theme
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
+    # Set clock to show date
+    gsettings set org.gnome.desktop.interface clock-show-date true
+    gsettings set org.gnome.desktop.interface clock-show-weekday true
+
+    # Minimize and maximize buttons on windows
+    gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+
+    # Disable hot corner
+    gsettings set org.gnome.desktop.interface enable-hot-corners false
+
+    # Keyboard repeat rate (faster typing)
+    gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 30
+    gsettings set org.gnome.desktop.peripherals.keyboard delay 250
+
+    # Natural scrolling (like macOS) - uncomment if desired
+    # gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
+    # gsettings set org.gnome.desktop.peripherals.mouse natural-scroll true
+
+    # Tap to click on touchpad
+    gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+
+    # Workspaces span all displays
+    gsettings set org.gnome.mutter workspaces-only-on-primary false
+
+    # Focus follows mouse (uncomment if desired)
+    # gsettings set org.gnome.desktop.wm.preferences focus-mode 'sloppy'
+
+    # Show hidden files in file manager
+    gsettings set org.gnome.nautilus.preferences show-hidden-files true
+
+    # Set default terminal to open maximized
+    gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
+
+    echo "GNOME settings configured."
+fi
+
+###############################################################################
+# KDE Plasma Settings (if using KDE)                                          #
+###############################################################################
+
+if command -v kwriteconfig5 &> /dev/null; then
+    echo "Configuring KDE Plasma settings..."
+    
+    # Disable animations
+    kwriteconfig5 --file kwinrc --group Compositing --key AnimationSpeed 0
+    
+    # Single-click to open files (like macOS)
+    kwriteconfig5 --file kdeglobals --group KDE --key SingleClick true
+    
+    echo "KDE Plasma settings configured."
+fi
+
+###############################################################################
+# System Configuration                                                         #
+###############################################################################
+
+# Increase inotify watchers for development (VS Code, etc.)
+echo "Configuring system for development..."
+if ! grep -q "fs.inotify.max_user_watches" /etc/sysctl.conf 2>/dev/null; then
+    echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+    sudo sysctl -p
+fi
+
+# Increase file descriptor limits
+if ! grep -q "* soft nofile" /etc/security/limits.conf 2>/dev/null; then
+    echo "* soft nofile 65536" | sudo tee -a /etc/security/limits.conf
+    echo "* hard nofile 65536" | sudo tee -a /etc/security/limits.conf
+fi
+
+###############################################################################
+# Fonts                                                                        #
+###############################################################################
+
+# Create fonts directory if it doesn't exist
+mkdir -p ~/.local/share/fonts
+
+# Install popular coding fonts (optional - uncomment to enable)
+# echo "Installing coding fonts..."
+# cd /tmp
+# wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
+# unzip FiraCode.zip -d ~/.local/share/fonts/FiraCode
+# fc-cache -fv
+
+###############################################################################
+# Development Tools                                                            #
+###############################################################################
+
+# Add user to docker group if docker is installed
+if command -v docker &> /dev/null; then
+    if ! groups | grep -q docker; then
+        sudo usermod -aG docker $USER
+        echo "Added user to docker group. Please log out and back in for this to take effect."
+    fi
+fi
+
+###############################################################################
+# SSH Configuration                                                            #
+###############################################################################
+
+# Ensure SSH directory exists with correct permissions
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+
+# Start SSH agent if not running
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    eval "$(ssh-agent -s)"
+fi
+
+###############################################################################
+# Done                                                                         #
+###############################################################################
+
+echo ""
+echo "Linux configuration complete!"
+echo "Some changes may require logging out and back in to take effect."
