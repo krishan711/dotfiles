@@ -269,3 +269,7 @@ elif [[ "$OS" == "Linux" ]]; then
     alias myip='hostname -I | awk '\''{ print $1 }'\'''
 fi
 alias rm-dsstore='find . -name .DS_Store -type f -exec rm {} \;'
+alias myip='ifconfig en0 | grep inet | awk '\''{ print $2 }'\'''
+alias start-local-api='cloudflared tunnel run --token "$(cloudflared tunnel token localapi)"'
+alias start-local-app='cloudflared tunnel run --token "$(cloudflared tunnel token localapp)"'
+alias start-local-app2='cloudflared tunnel run --token "$(cloudflared tunnel token localapp2)"'

@@ -10,6 +10,7 @@ Desktop.ini
 .vscode/
 *.swp
 *.log
+.stubs
 
 # Protobufs
 *_pb2.*
@@ -33,6 +34,7 @@ tmp/
 cache/
 artifacts/
 secrets/
+data/
 
 # Python
 __pycache__/
@@ -65,4 +67,7 @@ override.tf.json
 terraform.rc
 
 # Solidity
-**/.openzeppelin/*
+**/.openzeppelin
+
+# Agents
+**/.claude

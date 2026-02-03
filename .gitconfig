@@ -170,3 +170,6 @@ rebase = false
 # Custom for krishan711
 [user]
 email = krishan711@gmail.com
+
+[advice]
+addIgnoredFile = false

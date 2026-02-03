@@ -2,7 +2,7 @@ OPENVPN_DATA=/home/ec2-user/openvpn-data
 OPENVPN_CONTAINER_NAME=openvpn
 
 # for kiba (10.17.0.0/16)
-OPENVPN_ADDRESS=udp://vpn2.kiba.dev
+OPENVPN_ADDRESS=udp://34.249.191.66
 OPENVPN_ROUTE=10.17.0.0
 # for tokenpage (172.31.0.0/16)
 OPENVPN_ADDRESS=udp://vpn.tokenpage.xyz
