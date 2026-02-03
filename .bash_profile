@@ -103,7 +103,7 @@ export NPM_PACKAGES_ROOT=$HOME/.npm-packages
 mkdir -p $NPM_PACKAGES_ROOT/lib
 npm config set prefix $NPM_PACKAGES_ROOT/
 export PATH=$PATH:$NPM_PACKAGES_ROOT/bin
-export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath)
+export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath 2>/dev/null)
 
 # set npm to ignore scripts for security (e.g. ignores post-install on deps)
 npm config set ignore-scripts true
@@ -123,12 +123,12 @@ elif [[ "$OS" == "Linux" ]]; then
     fi
 fi
 
-# Load passwords
+# Load passwords (suppress output)
 if [ -f $HOME/.bash_passwords ]; then
-    source $HOME/.bash_passwords
+    source $HOME/.bash_passwords >/dev/null 2>&1
 fi
 if [ -f $HOME/.bash_secrets ]; then
-    source $HOME/.bash_secrets
+    source $HOME/.bash_secrets >/dev/null 2>&1
 fi
 
 # direnv

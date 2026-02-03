@@ -260,7 +260,11 @@ alias gbcn='echo "Please use gsn instead"; git switch -c'
 # Random
 alias rm-orig='rm **/*.orig'
 # Reload the shell - exec replaces the shell so nothing after it runs
-alias reload='exec ${SHELL} -l'
+if [[ "$OS" == "Darwin" ]]; then
+    alias reload='exec ${SHELL} -l'
+elif [[ "$OS" == "Linux" ]]; then
+    alias reload='exec bash -l'
+fi
 if [[ "$OS" == "Darwin" ]]; then
     alias insomnia='caffeinate -dimsu'
     alias myip='ifconfig en0 | grep inet | awk '\''{ print $2 }'\'''
