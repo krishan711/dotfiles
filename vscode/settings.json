@@ -1,8 +1,5 @@
 {
-<<<<<<< Updated upstream
     "workbench.colorTheme": "One Dark Pro Night Flat",
-=======
->>>>>>> Stashed changes
     "window.title": "${activeEditorLong}${separator}${rootName}",
     "files.autoSave": "afterDelay",
     "files.trimTrailingWhitespace": true,
@@ -31,11 +28,8 @@
     "explorer.confirmDragAndDrop": false,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDelete": false,
-<<<<<<< Updated upstream
     "workbench.editor.enablePreview": false,
-=======
     "workbench.iconTheme": "vscode-icons",
->>>>>>> Stashed changes
     "vsicons.dontShowNewVersionMessage": true,
     "editor.fontLigatures": false,
     "[javascript]": {
@@ -236,6 +230,8 @@
     "github.copilot.chat.agent.thinkingTool": true,
     "chat.agent.maxRequests": 50,
     "chat.tools.terminal.autoApprove": {
+        "terraform fmt": true,
+        "terraform validate": true,
         "head": true,
         "awk": true,
         "sed": true,
@@ -391,6 +387,8 @@
     "githubPullRequests.fileListLayout": "flat",
     "githubPullRequests.ignoreSubmodules": true,
     "chat.tools.urls.autoApprove": {
+        "https://code.visualstudio.com": true,
+        "https://github.com/microsoft/vscode/wiki/*": true,
         "https://0x.org": true,
         "https://*.aws.amazon.com": true,
         "https://docs.aws.amazon.com": true,
@@ -405,13 +403,46 @@
             "approveRequest": false,
             "approveResponse": true
         },
-        "https://www.alchemy.com": true
+        "https://www.alchemy.com": true,
+        "https://docs.base.org": true,
+        "https://eip.tools": true,
+        "https://docs.openclaw.ai": {
+            "approveRequest": false,
+            "approveResponse": true
+        },
+        "https://learn.microsoft.com": {
+            "approveRequest": false,
+            "approveResponse": true
+        },
+        "https://registry.terraform.io": true,
+        "https://www.bing.com": true,
+        "https://azure.microsoft.com": {
+            "approveRequest": false,
+            "approveResponse": true
+        },
+        "https://azurecharts.com": true,
+        "https://api.hevyapp.com": {
+            "approveRequest": false,
+            "approveResponse": true
+        },
+        "https://ai.google.dev": {
+            "approveRequest": true,
+            "approveResponse": false
+        },
+        "https://openrouter.ai": {
+            "approveRequest": true,
+            "approveResponse": false
+        },
+        "https://*.40acres.finance": true,
+        "https://docs.cdp.coinbase.com": {
+            "approveRequest": true,
+            "approveResponse": false
+        }
     },
     "synapse.localWorkFolderPath": "/Users/krishan/Projects/agent-hack",
     "chat.viewSessions.orientation": "stacked",
     "claudeCode.preferredLocation": "sidebar",
     "claudeCode.selectedModel": "default",
-    "amp.url": "https://ampcode.com/",
     "editor.wordBasedSuggestions": "off",
     "amp.tab.enabled": true,
     "amp.mcpServers": {
@@ -424,5 +455,5 @@
                 "--isolated"
             ]
         }
-    },
+    }
 }
