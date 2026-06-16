@@ -283,3 +283,21 @@ alias start-local-app2='cloudflared tunnel run --token "$(cloudflared tunnel tok
 alias tmux-new='tmux new-session -ADs'
 alias tmux-ls='tmux list-sessions'
 alias tmux-rm='tmux kill-session -t'
+
+# SSH proxy
+proxystart() {
+    local host="${1:-whiteowlvpn}"
+    ssh -D 1080 -N -f -q "$host"
+    echo "Proxy started via $host on socks5://localhost:1080"
+}
+proxyuse() {
+    export HTTPS_PROXY=socks5://localhost:1080
+    export HTTP_PROXY=socks5://localhost:1080
+    export no_proxy="core.windows.net,localhost,127.0.0.1"
+    export NO_PROXY="$no_proxy"
+    echo "Proxy env vars set (NO_PROXY: $NO_PROXY)"
+}
+proxystop() {
+    pkill -f "ssh -D 1080" && echo "Proxy stopped" || echo "No proxy process found"
+    unset HTTPS_PROXY HTTP_PROXY NO_PROXY no_proxy
+}

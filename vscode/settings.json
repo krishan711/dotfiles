@@ -441,7 +441,6 @@
     },
     "synapse.localWorkFolderPath": "/Users/krishan/Projects/agent-hack",
     "chat.viewSessions.orientation": "stacked",
-    "claudeCode.preferredLocation": "sidebar",
     "claudeCode.selectedModel": "default",
     "editor.wordBasedSuggestions": "off",
     "amp.tab.enabled": true,
@@ -455,5 +454,7 @@
                 "--isolated"
             ]
         }
-    }
+    },
+    "claudeCode.usePythonEnvironment": false,
+    "claudeCode.preferredLocation": "sidebar"
 }

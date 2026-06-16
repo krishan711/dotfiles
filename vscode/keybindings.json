@@ -30,6 +30,22 @@
         "command": "workbench.action.terminal.focusNext",
         "when": "terminalFocus"
     },
+    {
+        "key": "meta+c",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "\u0003" },
+        "when": "terminalFocus && !terminalTextSelected"
+    },
+    {
+        "key": "meta+c",
+        "command": "workbench.action.terminal.copySelection",
+        "when": "terminalFocus && terminalTextSelected"
+    },
+    {
+        "key": "meta+v",
+        "command": "workbench.action.terminal.paste",
+        "when": "terminalFocus"
+    },
 
     // Editor - Split/Navigation
     {
@@ -161,5 +177,17 @@
     {
         "key": "ctrl+shift+t",
         "command": "workbench.action.reopenClosedEditor"
+    },
+
+    // Linux Meta (Super/Cmd) + C/V support for copy/paste
+    {
+        "key": "meta+c",
+        "command": "editor.action.clipboardCopyAction",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "meta+v",
+        "command": "editor.action.clipboardPasteAction",
+        "when": "editorTextFocus && !editorReadonly"
     }
 ]
