@@ -69,5 +69,8 @@ terraform.rc
 # Solidity
 **/.openzeppelin
 
+# Brew bundle lock file (auto-generated)
+brew/Brewfile.lock.json
+
 # Agents
 **/.claude

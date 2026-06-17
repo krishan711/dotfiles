@@ -1,27 +1,36 @@
-code --install-extension anthropic.claude-code
-code --install-extension bierner.markdown-mermaid
-code --install-extension cssho.vscode-svgviewer
-code --install-extension docker.docker
-code --install-extension github.copilot
-code --install-extension github.copilot-chat
-code --install-extension github.vscode-pull-request-github
-code --install-extension graphql.vscode-graphql
-code --install-extension graphql.vscode-graphql-syntax
-code --install-extension hashicorp.terraform
-code --install-extension ms-python.python
-code --install-extension ms-vsliveshare.vsliveshare
-code --install-extension ms-vscode-remote.remote-containers
-code --install-extension ms-vscode-remote.remote-ssh
-code --install-extension ms-vscode-remote.remote-ssh-edit
-code --install-extension ms-vscode-remote.vscode-remote-extensionpack
-code --install-extension nomicfoundation.hardhat-solidity
-code --install-extension redhat.vscode-yaml
-code --install-extension sourcegraph.amp
-code --install-extension streetsidesoftware.code-spell-checker
-code --install-extension styled-components.vscode-styled-components
-code --install-extension synapsevscode.synapse
-code --install-extension tamasfe.even-better-toml
-code --install-extension unifiedjs.vscode-mdx
-code --install-extension vscode-icons-team.vscode-icons
-code --install-extension wmaurer.change-case
-code --install-extension zhuangtongfa.material-theme
+#!/usr/bin/env bash
+
+INSTALLED=$(code --list-extensions 2>/dev/null | tr '[:upper:]' '[:lower:]')
+
+install_if_missing() {
+    local ext="$1"
+    if echo "$INSTALLED" | grep -qi "^${ext}$"; then
+        echo "  Skipping ${ext} (already installed)"
+    else
+        code --install-extension "${ext}"
+    fi
+}
+
+install_if_missing "anthropic.claude-code"
+install_if_missing "bierner.markdown-mermaid"
+install_if_missing "docker.docker"
+install_if_missing "github.vscode-pull-request-github"
+install_if_missing "graphql.vscode-graphql"
+install_if_missing "graphql.vscode-graphql-syntax"
+install_if_missing "hashicorp.terraform"
+install_if_missing "ms-python.python"
+install_if_missing "ms-vsliveshare.vsliveshare"
+install_if_missing "ms-vscode-remote.remote-containers"
+install_if_missing "ms-vscode-remote.remote-ssh"
+install_if_missing "ms-vscode-remote.remote-ssh-edit"
+install_if_missing "ms-vscode-remote.vscode-remote-extensionpack"
+install_if_missing "nomicfoundation.hardhat-solidity"
+install_if_missing "redhat.vscode-yaml"
+install_if_missing "streetsidesoftware.code-spell-checker"
+install_if_missing "styled-components.vscode-styled-components"
+install_if_missing "synapsevscode.synapse"
+install_if_missing "tamasfe.even-better-toml"
+install_if_missing "unifiedjs.vscode-mdx"
+install_if_missing "vscode-icons-team.vscode-icons"
+install_if_missing "wmaurer.change-case"
+install_if_missing "zhuangtongfa.material-theme"
