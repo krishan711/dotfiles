@@ -53,5 +53,9 @@ brew "hashicorp/tap/terraform"
 brew "go"
 brew "jq"
 brew "foundry"
-cask "tunnelblick"
 cask "awscli"
+
+# Apps
+cask "tunnelblick"
+cask "brave-browser"
+cask "visual-studio-code"
