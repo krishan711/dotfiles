@@ -1,0 +1,55 @@
+tap "hashicorp/tap"
+
+# GNU core utilities (macOS versions are outdated)
+brew "coreutils"
+brew "moreutils"
+brew "findutils"
+brew "gnu-sed"
+
+# Modern bash
+brew "bash"
+brew "bash-completion@2"
+
+# Network / download
+brew "wget"
+brew "gnupg"
+
+# Updated macOS tools
+brew "vim"
+brew "grep"
+brew "openssh"
+brew "screen"
+brew "php"
+brew "gmp"
+
+# Font tools
+brew "woff2"
+
+# Useful binaries
+brew "ack"
+brew "git"
+brew "git-lfs"
+brew "imagemagick"
+brew "lua"
+brew "lynx"
+brew "p7zip"
+brew "pigz"
+brew "pv"
+brew "rename"
+brew "rlwrap"
+brew "ssh-copy-id"
+brew "tree"
+brew "vbindiff"
+brew "zopfli"
+
+# Dev tools
+brew "python"
+brew "node"
+brew "direnv"
+brew "libmagic"
+brew "cairo"
+brew "pkgconf"
+brew "hashicorp/tap/terraform"
+brew "go"
+brew "jq"
+brew "foundry"
