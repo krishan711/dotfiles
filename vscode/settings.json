@@ -456,5 +456,12 @@
         }
     },
     "claudeCode.usePythonEnvironment": false,
-    "claudeCode.preferredLocation": "sidebar"
+    "claudeCode.preferredLocation": "sidebar",
+    "files.readonlyInclude": {
+        "**/fabric-snapshots/**": true
+    },
+    "chat.modeFilesLocations": {
+        ".github/chatmodes": true,
+        "/Users/krishan/.vscode/extensions/synapsevscode.synapse-1.25.0/copilot/chatmodes": true
+    }
 }
