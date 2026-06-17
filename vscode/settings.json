@@ -164,8 +164,7 @@
     "solidity.telemetry": false,
     "terminal.integrated.profiles.osx": {
         "bash": {
-            "path": ["/opt/homebrew/bin/bash", "/usr/local/bin/bash", "/bin/bash"],
-            "args": ["-l"]
+            "path": "/opt/homebrew/bin/bash"
         }
     },
     "terminal.external.osxExec": "ITerm2.app",

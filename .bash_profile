@@ -40,17 +40,6 @@ if [[ "$OS" == "Linux" ]]; then
     fi
 fi
 
-# Set DOTFILES_PATH if not already set (needed when sourced directly as ~/.bash_profile)
-if [ -z "$DOTFILES_PATH" ]; then
-    if [ -d "$HOME/Projects/dotfiles" ]; then
-        export DOTFILES_PATH="$HOME/Projects/dotfiles"
-    elif [ -d "$HOME/dotfiles" ]; then
-        export DOTFILES_PATH="$HOME/dotfiles"
-    elif [ -d "$HOME/.dotfiles" ]; then
-        export DOTFILES_PATH="$HOME/.dotfiles"
-    fi
-fi
-
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
