@@ -275,9 +275,25 @@ elif [[ "$OS" == "Linux" ]]; then
 fi
 alias rm-dsstore='find . -name .DS_Store -type f -exec rm {} \;'
 alias myip='ifconfig en0 | grep inet | awk '\''{ print $2 }'\'''
-alias start-local-api='cloudflared tunnel run --token "$(cloudflared tunnel token localapi)"'
-alias start-local-app='cloudflared tunnel run --token "$(cloudflared tunnel token localapp)"'
-alias start-local-app2='cloudflared tunnel run --token "$(cloudflared tunnel token localapp2)"'
+
+# local forwarding
+alias cloudflared-login='cloudflared tunnel login'
+_expose_local() {
+    local name="$1" port="$2" hostname="$3"
+    local token tunnel_json tunnel_id account_id
+    token="$(cloudflared tunnel token "$name")"
+    tunnel_json=$(echo "$token" | python3 -c "import base64,sys; t=sys.stdin.read().strip(); print(base64.urlsafe_b64decode(t+'==').decode())")
+    tunnel_id=$(echo "$tunnel_json" | jq -r '.t')
+    account_id=$(echo "$tunnel_json" | jq -r '.a')
+    curl -s -X PUT "https://api.cloudflare.com/client/v4/accounts/${account_id}/cfd_tunnel/${tunnel_id}/configurations" \
+        -H "Authorization: Bearer ${CLOUDFALRE_API_TOKEN}" \
+        -H "Content-Type: application/json" \
+        -d "{\"config\":{\"ingress\":[{\"hostname\":\"${hostname}\",\"service\":\"http://localhost:${port}\"},{\"service\":\"http_status:404\"}]}}" | jq -r '.success'
+    cloudflared tunnel run --token "$token"
+}
+expose-local-api() { _expose_local localapi "${1:-5000}" localapi.kibalabs.xyz; }
+expose-local-app() { _expose_local localapp "${1:-3000}" localapp.kibalabs.xyz; }
+expose-local-app2() { _expose_local localapp2 "${1:-3001}" localapp2.kibalabs.xyz; }
 
 # tmux
 alias tmux-new='tmux new-session -ADs'

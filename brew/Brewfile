@@ -53,7 +53,9 @@ brew "hashicorp/tap/terraform"
 brew "go"
 brew "jq"
 brew "foundry"
-cask "awscli"
+brew "awscli"
+brew "azure-cli"
+brew "cloudflared"
 
 # Apps
 cask "tunnelblick"

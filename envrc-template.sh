@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#!/usr/bin/env bash
-
 expected_env=".env"
 expected_path="$expected_env/bin/activate"
 if [ ! -d "$expected_env" ]; then
