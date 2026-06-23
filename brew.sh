@@ -13,6 +13,7 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 # Install Homebrew if not already present.
 if ! command -v brew &> /dev/null; then
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Remove defunct taps that cause git auth failures on brew update.
