@@ -28,6 +28,7 @@ brew upgrade
 
 # Explicitly tap third-party taps so brew bundle treats them as trusted.
 brew tap hashicorp/tap
+brew trust hashicorp/tap
 
 # Install all packages via Brewfile (skips already-installed ones quietly).
 brew bundle install --file="$(dirname "${BASH_SOURCE[0]}")/brew/Brewfile"
