@@ -14,11 +14,11 @@ echo "Detected OS: $OS"
 
 # Configure OS-specific settings
 if [[ "$OS" == "Darwin" ]]; then
-    echo "Running macOS configuration..."
-    ./.macos
-
     # Download and run brew
     ./brew.sh
+
+    echo "Running macOS configuration..."
+    ./.macos
 
     # Install xbar stuff
     mkdir -p ~/Library/Application\ Support/xbar/plugins

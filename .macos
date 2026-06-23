@@ -324,7 +324,7 @@ defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 
 # Use list view in all Finder windows by default
 # Four-letter codes for the other view modes: `icnv`, `clmv`, `glyv`
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
 
 # Disable the warning before emptying the Trash
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
@@ -780,6 +780,21 @@ defaults write com.twitter.twitter-mac HideInBackground -bool true
 
 # Bypass the annoyingly slow t.co URL shortener
 defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
+
+###############################################################################
+# Finder sidebar                                                              #
+###############################################################################
+
+if command -v mysides &>/dev/null; then
+    for item in "Recents" "iCloud Drive" "AirDrop" "Applications" "Desktop" "Documents" "Downloads" "Music" "Movies" "Pictures" "Creative Cloud Files" "$(whoami)"; do
+        mysides remove "$item" 2>/dev/null || true
+    done
+    mysides add "Applications" file:///Applications/
+    mysides add "Desktop" "file://${HOME}/Desktop/"
+    mysides add "Documents" "file://${HOME}/Documents/"
+    mysides add "Downloads" "file://${HOME}/Downloads/"
+    mysides add "Projects" "file://${HOME}/Projects/"
+fi
 
 ###############################################################################
 # Kill affected applications                                                  #
