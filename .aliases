@@ -309,7 +309,7 @@ proxystart() {
 proxyuse() {
     export HTTPS_PROXY=socks5://localhost:1080
     export HTTP_PROXY=socks5://localhost:1080
-    export no_proxy="core.windows.net,localhost,127.0.0.1"
+    export no_proxy="localhost,127.0.0.1"
     export NO_PROXY="$no_proxy"
     echo "Proxy env vars set (NO_PROXY: $NO_PROXY)"
 }

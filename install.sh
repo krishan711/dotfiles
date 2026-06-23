@@ -20,10 +20,6 @@ if [[ "$OS" == "Darwin" ]]; then
     echo "Running macOS configuration..."
     ./.macos
 
-    # Install xbar stuff
-    mkdir -p ~/Library/Application\ Support/xbar/plugins
-    cp -R ./xbar/*.sh ~/Library/Application\ Support/xbar/plugins
-
 elif [[ "$OS" == "Linux" ]]; then
     echo "Running Linux configuration..."
     ./.linux
@@ -61,3 +57,6 @@ fi
 
 # Apply Brave settings and policies
 ./brave/apply.sh
+
+# Run updates (brew upgrade + SwiftBar plugins)
+./update.sh

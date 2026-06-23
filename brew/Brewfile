@@ -58,6 +58,9 @@ brew "azure-cli"
 brew "cloudflared"
 
 # Apps
+cask "docker"
+cask "dropbox"
+cask "swiftbar"
 cask "tunnelblick"
 cask "brave-browser"
 cask "visual-studio-code"
