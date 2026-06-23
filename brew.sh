@@ -19,13 +19,15 @@ fi
 # Remove defunct or untrusted taps before updating.
 brew untap homebrew/homebrew-versions 2>/dev/null || true
 brew untap karan/homebrew-karan 2>/dev/null || true
-brew untap hashicorp/tap 2>/dev/null || true
 
 # Make sure we’re using the latest Homebrew.
 brew update
 
 # Upgrade any already-installed formulae.
 brew upgrade
+
+# Explicitly tap third-party taps so brew bundle treats them as trusted.
+brew tap hashicorp/tap
 
 # Install all packages via Brewfile (skips already-installed ones quietly).
 brew bundle install --file="$(dirname "${BASH_SOURCE[0]}")/brew/Brewfile"
