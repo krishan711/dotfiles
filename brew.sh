@@ -16,9 +16,10 @@ if ! command -v brew &> /dev/null; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Remove defunct taps that cause git auth failures on brew update.
+# Remove defunct or untrusted taps before updating.
 brew untap homebrew/homebrew-versions 2>/dev/null || true
 brew untap karan/homebrew-karan 2>/dev/null || true
+brew untap hashicorp/tap 2>/dev/null || true
 
 # Make sure we’re using the latest Homebrew.
 brew update
