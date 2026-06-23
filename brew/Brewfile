@@ -57,9 +57,6 @@ brew "awscli"
 brew "azure-cli"
 brew "cloudflared"
 
-# CLI tools
-brew "mysides"
-
 # Apps
 cask "tunnelblick"
 cask "brave-browser"

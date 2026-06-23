@@ -782,21 +782,6 @@ defaults write com.twitter.twitter-mac HideInBackground -bool true
 defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
 
 ###############################################################################
-# Finder sidebar                                                              #
-###############################################################################
-
-if command -v mysides &>/dev/null; then
-    for item in "Recents" "iCloud Drive" "AirDrop" "Applications" "Desktop" "Documents" "Downloads" "Music" "Movies" "Pictures" "Creative Cloud Files" "$(whoami)"; do
-        mysides remove "$item" 2>/dev/null || true
-    done
-    mysides add "Applications" file:///Applications/
-    mysides add "Desktop" "file://${HOME}/Desktop/"
-    mysides add "Documents" "file://${HOME}/Documents/"
-    mysides add "Downloads" "file://${HOME}/Downloads/"
-    mysides add "Projects" "file://${HOME}/Projects/"
-fi
-
-###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
 
