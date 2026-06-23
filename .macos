@@ -817,4 +817,8 @@ echo "════════════════════════�
 echo "  Accessibility → Display:"
 echo "    ✦ Enable 'Reduce transparency'"
 echo ""
+echo "  Lock Screen (deprecated defaults, set manually):"
+echo "    ✦ System Settings → Lock Screen → 'Require password after'"
+echo "      set to 'Immediately'"
+echo ""
 echo "════════════════════════════════════════════════════════"
