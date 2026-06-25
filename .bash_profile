@@ -108,15 +108,16 @@ export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath 2>/dev/null)
 # set npm to ignore scripts for security (e.g. ignores post-install on deps)
 npm config set ignore-scripts true
 
-# Create symlink between vscode settings in this repo and on local device
+# Create symlinks between editor settings in this repo and on local device
 if [[ "$OS" == "Darwin" ]]; then
-    # macOS VS Code settings location
     if [ -d "$HOME/Library/Application Support/Code" ]; then
         ln -f -s $DOTFILES_PATH/vscode/settings.json "$HOME/Library/Application Support/Code/User/settings.json"
         ln -f -s $DOTFILES_PATH/vscode/keybindings.json "$HOME/Library/Application Support/Code/User/keybindings.json"
     fi
+    if [ -d "$HOME/.config/zed" ]; then
+        ln -f -s $DOTFILES_PATH/zed/settings.json "$HOME/.config/zed/settings.json"
+    fi
 elif [[ "$OS" == "Linux" ]]; then
-    # Linux VS Code settings location
     if [ -d "$HOME/.config/Code/User" ]; then
         ln -f -s $DOTFILES_PATH/vscode/settings.json "$HOME/.config/Code/User/settings.json"
         ln -f -s $DOTFILES_PATH/vscode/keybindings.json "$HOME/.config/Code/User/keybindings.json"

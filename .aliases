@@ -303,7 +303,7 @@ alias tmux-rm='tmux kill-session -t'
 # SSH proxy
 proxystart() {
     local host="${1:-whiteowlvpn}"
-    ssh -D 1080 -N -f -q "$host"
+    ssh -D 1080 -N -f "$host"
     echo "Proxy started via $host on socks5://localhost:1080"
 }
 proxyuse() {

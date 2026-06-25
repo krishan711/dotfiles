@@ -58,7 +58,8 @@ brew "azure-cli"
 brew "cloudflared"
 
 # Apps
-cask "docker"
+cask "docker-desktop"
+cask "zed"
 cask "dropbox"
 cask "swiftbar"
 cask "tunnelblick"
