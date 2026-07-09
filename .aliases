@@ -274,7 +274,6 @@ elif [[ "$OS" == "Linux" ]]; then
     alias myip='hostname -I | awk '\''{ print $1 }'\'''
 fi
 alias rm-dsstore='find . -name .DS_Store -type f -exec rm {} \;'
-alias myip='ifconfig en0 | grep inet | awk '\''{ print $2 }'\'''
 
 # local forwarding
 alias cloudflared-login='cloudflared tunnel login'
@@ -319,4 +318,20 @@ proxyoff() {
 }
 proxystop() {
     pkill -f "ssh -D 1080" && echo "Proxy stopped" || echo "No proxy process found"
+}
+
+# Open Zed
+z() {
+    if [ "$#" -eq 0 ]; then
+        set -- "$PWD"
+    fi
+
+    if command -v zed >/dev/null 2>&1; then
+        command zed "$@"
+    elif [[ "$OS" == "Darwin" ]]; then
+        open -a "Zed" "$@"
+    else
+        echo "zed is not installed or not on PATH" >&2
+        return 1
+    fi
 }

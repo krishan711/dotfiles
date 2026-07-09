@@ -16,7 +16,7 @@ defaultThinkingLevel: medium
 advisor: 
   enabled: false
 modelRoles: 
-  default: anthropic/claude-sonnet-5
+  default: openai-codex/gpt-5.4:medium
   smol: openai-codex/gpt-5.4-nano:medium
   tiny: openai-codex/gpt-5.4-nano
   advisor: anthropic/claude-sonnet-5
