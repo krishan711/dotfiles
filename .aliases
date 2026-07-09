@@ -313,7 +313,10 @@ proxyuse() {
     export NO_PROXY="$no_proxy"
     echo "Proxy env vars set (NO_PROXY: $NO_PROXY)"
 }
+proxyoff() {
+    unset HTTPS_PROXY HTTP_PROXY NO_PROXY no_proxy
+    echo "Proxy env vars unset"
+}
 proxystop() {
     pkill -f "ssh -D 1080" && echo "Proxy stopped" || echo "No proxy process found"
-    unset HTTPS_PROXY HTTP_PROXY NO_PROXY no_proxy
 }

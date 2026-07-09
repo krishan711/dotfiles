@@ -108,20 +108,27 @@ export MANPATH=$NPM_PACKAGES_ROOT/share/man:$(manpath 2>/dev/null)
 # set npm to ignore scripts for security (e.g. ignores post-install on deps)
 npm config set ignore-scripts true
 
-# Create symlinks between editor settings in this repo and on local device
+# Symlink VSCode config
 if [[ "$OS" == "Darwin" ]]; then
     if [ -d "$HOME/Library/Application Support/Code" ]; then
         ln -f -s $DOTFILES_PATH/vscode/settings.json "$HOME/Library/Application Support/Code/User/settings.json"
         ln -f -s $DOTFILES_PATH/vscode/keybindings.json "$HOME/Library/Application Support/Code/User/keybindings.json"
-    fi
-    if [ -d "$HOME/.config/zed" ]; then
-        ln -f -s $DOTFILES_PATH/zed/settings.json "$HOME/.config/zed/settings.json"
     fi
 elif [[ "$OS" == "Linux" ]]; then
     if [ -d "$HOME/.config/Code/User" ]; then
         ln -f -s $DOTFILES_PATH/vscode/settings.json "$HOME/.config/Code/User/settings.json"
         ln -f -s $DOTFILES_PATH/vscode/keybindings.json "$HOME/.config/Code/User/keybindings.json"
     fi
+fi
+
+# Symlink OMP config
+if [ -d "$HOME/.omp/agent" ]; then
+    ln -f -s $DOTFILES_PATH/omp/config.yml "$HOME/.omp/agent/config.yml"
+fi
+
+# Symlink Zed config
+if [ -d "$HOME/.config/zed" ]; then
+    ln -f -s $DOTFILES_PATH/zed/settings.json "$HOME/.config/zed/settings.json"
 fi
 
 # Load passwords (suppress output)

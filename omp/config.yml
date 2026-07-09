@@ -1,0 +1,59 @@
+setupVersion: 1
+statusLine: 
+  preset: custom
+  transparent: true
+  compactThinkingLevel: true
+  separator: powerline-thin
+  leftSegments: 
+    - session_name
+    - model
+    - mode
+  rightSegments: 
+    - cost
+    - context_pct
+  showHookStatus: true
+defaultThinkingLevel: medium
+advisor: 
+  enabled: false
+modelRoles: 
+  default: anthropic/claude-sonnet-5
+  smol: openai-codex/gpt-5.4-nano:medium
+  tiny: openai-codex/gpt-5.4-nano
+  advisor: anthropic/claude-sonnet-5
+theme: 
+  dark: dark
+hideThinkingBlock: true
+proseOnlyThinking: false
+omitThinking: true
+providers: 
+  anthropic: 
+    serverSideFallback: false
+steeringMode: all
+tools: 
+  approvalMode: yolo
+autoResume: true
+startup: 
+  quiet: true
+  showSplash: false
+contextPromotion: 
+  enabled: false
+branchSummary: 
+  enabled: true
+memory: 
+  backend: local
+autolearn: 
+  enabled: true
+  autoContinue: true
+edit: 
+  mode: hashline
+inspect_image: 
+  enabled: true
+plan: 
+  defaultOnStartup: false
+followUpMode: all
+loop: 
+  mode: prompt
+doubleEscapeAction: none
+treeFilterMode: default
+paste: 
+  largeMenuThreshold: 100

@@ -98,6 +98,11 @@ defaults write com.apple.helpviewer DevMode -bool true
 # Show battery percentage in menu bar
 defaults write com.apple.controlcenter BatteryShowPercentage -bool true
 
+# Set DNS servers to Cloudflare and Google for all network services
+networksetup -listallnetworkservices | grep -v "^\*" | tail -n +2 | while IFS= read -r service; do
+    sudo networksetup -setdnsservers "$service" 1.1.1.1 1.0.0.1 8.8.8.8 8.8.4.4
+done
+
 # Reveal IP address, hostname, OS version, etc. when clicking the clock
 # in the login window
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName

@@ -55,8 +55,5 @@ fi
 # Install vscode extensions
 ./vscode/install-extensions.sh
 
-# Apply Brave settings and policies
-./brave/apply.sh
-
 # Run updates (brew upgrade + SwiftBar plugins)
 ./update.sh

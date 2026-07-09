@@ -9,6 +9,7 @@ fi
 # Suppress post-install cleanup hints.
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
+export HOMEBREW_NO_INTERACTIVE=1
 
 # Install Homebrew if not already present.
 if ! command -v brew &> /dev/null; then
@@ -24,11 +25,13 @@ brew untap karan/homebrew-karan 2>/dev/null || true
 brew update
 
 # Upgrade any already-installed formulae.
-brew upgrade
+echo y | brew upgrade
 
 # Explicitly tap third-party taps so brew bundle treats them as trusted.
 brew tap hashicorp/tap
 brew trust hashicorp/tap
+brew tap can1357/tap
+brew trust can1357/tap
 
 # Install all packages via Brewfile (skips already-installed ones quietly).
 brew bundle install --file="$(dirname "${BASH_SOURCE[0]}")/brew/Brewfile"
