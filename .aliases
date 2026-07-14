@@ -277,22 +277,77 @@ alias rm-dsstore='find . -name .DS_Store -type f -exec rm {} \;'
 
 # local forwarding
 alias cloudflared-login='cloudflared tunnel login'
-_expose_local() {
-    local name="$1" port="$2" hostname="$3"
-    local token tunnel_json tunnel_id account_id
-    token="$(cloudflared tunnel token "$name")"
-    tunnel_json=$(echo "$token" | python3 -c "import base64,sys; t=sys.stdin.read().strip(); print(base64.urlsafe_b64decode(t+'==').decode())")
-    tunnel_id=$(echo "$tunnel_json" | jq -r '.t')
-    account_id=$(echo "$tunnel_json" | jq -r '.a')
-    curl -s -X PUT "https://api.cloudflare.com/client/v4/accounts/${account_id}/cfd_tunnel/${tunnel_id}/configurations" \
-        -H "Authorization: Bearer ${CLOUDFALRE_API_TOKEN}" \
-        -H "Content-Type: application/json" \
-        -d "{\"config\":{\"ingress\":[{\"hostname\":\"${hostname}\",\"service\":\"http://localhost:${port}\"},{\"service\":\"http_status:404\"}]}}" | jq -r '.success'
-    cloudflared tunnel run --token "$token"
+
+expose-local() {
+    local port="$1" subdomain="$2"
+    local hostname tunnel_name existing create_json tunnel_id
+    local config_dir config_file credentials_file
+
+    if [[ -z "$port" || -z "$subdomain" || -n "$3" ]]; then
+        echo "Usage: expose-local <port> <subdomain>" >&2
+        return 2
+    fi
+    if ! [[ "$port" =~ ^[0-9]+$ ]] || (( port < 1 || port > 65535 )); then
+        echo "expose-local: port must be an integer from 1 to 65535" >&2
+        return 2
+    fi
+    if ! [[ "$subdomain" =~ ^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$ ]]; then
+        echo "expose-local: subdomain must be one DNS label using lowercase letters, numbers, and hyphens" >&2
+        return 2
+    fi
+
+    hostname="${subdomain}.kibalabs.xyz"
+    tunnel_name="$subdomain"
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/cloudflared/expose-local"
+    config_file="${config_dir}/${subdomain}.yml"
+
+    if ! existing=$(cloudflared tunnel list --name "$tunnel_name" --output json 2>/dev/null); then
+        echo "expose-local: could not list Cloudflare tunnels; run 'cloudflared tunnel login' first" >&2
+        return 1
+    fi
+    if printf '%s' "$existing" | jq -e 'length > 0' >/dev/null 2>&1; then
+        echo "Replacing existing tunnel: ${tunnel_name}" >&2
+        if ! cloudflared tunnel delete --force "$tunnel_name"; then
+            echo "expose-local: could not delete existing tunnel ${tunnel_name}" >&2
+            return 1
+        fi
+    fi
+
+    if ! create_json=$(cloudflared tunnel create --output json "$tunnel_name"); then
+        echo "expose-local: could not create tunnel; run 'cloudflared tunnel login' first" >&2
+        return 1
+    fi
+    tunnel_id=$(printf '%s' "$create_json" | jq -r '.id // .uuid // empty')
+    if [[ -z "$tunnel_id" ]]; then
+        echo "expose-local: cloudflared returned no tunnel id" >&2
+        return 1
+    fi
+
+    credentials_file="${HOME}/.cloudflared/${tunnel_id}.json"
+    mkdir -p "$config_dir"
+    cat > "$config_file" <<EOF
+tunnel: "$tunnel_id"
+credentials-file: "$credentials_file"
+ingress:
+  - hostname: "$hostname"
+    service: "http://localhost:$port"
+  - service: http_status:404
+EOF
+
+    if ! cloudflared tunnel --config "$config_file" ingress validate; then
+        echo "expose-local: generated tunnel config is invalid" >&2
+        cloudflared tunnel delete --force "$tunnel_id" >/dev/null 2>&1
+        return 1
+    fi
+    if ! cloudflared tunnel route dns --overwrite-dns "$tunnel_id" "$hostname"; then
+        echo "expose-local: could not replace DNS route for ${hostname}" >&2
+        cloudflared tunnel delete --force "$tunnel_id" >/dev/null 2>&1
+        return 1
+    fi
+
+    echo "Exposing http://localhost:${port} at https://${hostname}" >&2
+    cloudflared tunnel --config "$config_file" run "$tunnel_id"
 }
-expose-local-api() { _expose_local localapi "${1:-5000}" localapi.kibalabs.xyz; }
-expose-local-app() { _expose_local localapp "${1:-3000}" localapp.kibalabs.xyz; }
-expose-local-app2() { _expose_local localapp2 "${1:-3001}" localapp2.kibalabs.xyz; }
 
 # tmux
 alias tmux-new='tmux new-session -ADs'

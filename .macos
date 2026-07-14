@@ -98,6 +98,9 @@ defaults write com.apple.helpviewer DevMode -bool true
 # Show battery percentage in menu bar
 defaults write com.apple.controlcenter BatteryShowPercentage -bool true
 
+# Always show the menu bar, even in full screen apps
+defaults write NSGlobalDomain AppleMenuBarVisibleInFullscreen -int 1
+
 # Set DNS servers to Cloudflare and Google for all network services
 networksetup -listallnetworkservices | grep -v "^\*" | tail -n +2 | while IFS= read -r service; do
     sudo networksetup -setdnsservers "$service" 1.1.1.1 1.0.0.1 8.8.8.8 8.8.4.4

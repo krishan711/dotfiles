@@ -1,4 +1,5 @@
 {
+    "markdown_preview_font_size": 14.0,
     "focus_follows_mouse": {
         "enabled": false
     },
@@ -76,7 +77,7 @@
         "show_branch_status_icon": true,
     },
     "tab_bar": {
-        "show_pinned_tabs_in_separate_row": false,
+        "show_pinned_tabs_in_separate_row": true,
         "show_tab_bar_buttons": true,
         "show_nav_history_buttons": true,
     },
@@ -132,4 +133,16 @@
         "solidity": true,
         "mdx": true,
     },
+    "ssh_connections": [
+        {
+            "host": "kibahome",
+            "username": "krishan",
+            "port": 22,
+            "projects": [
+                {
+                    "paths": ["/home/krishan/Projects/white-owl-api"]
+                }
+            ]
+        }
+    ]
 }
