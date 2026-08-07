@@ -35,11 +35,11 @@ fi
 
 # Copy dotfiles (cross-platform)
 echo "Copying dotfiles..."
-cp $(pwd)/.gitconfig ~
-cp $(pwd)/.inputrc ~
-cp $(pwd)/.screenrc ~
-cp $(pwd)/.tmux.conf ~
-cp $(pwd)/.bashrc ~
+ln -sfn "$(pwd)/.gitconfig" "$HOME/.gitconfig"
+ln -sfn "$(pwd)/.inputrc" "$HOME/.inputrc"
+ln -sfn "$(pwd)/.screenrc" "$HOME/.screenrc"
+ln -sfn "$(pwd)/.tmux.conf" "$HOME/.tmux.conf"
+ln -sfn "$(pwd)/.bashrc" "$HOME/.bashrc"
 echo 'source ~/.bashrc' > ~/.bash_profile
 
 source ~/.bash_profile

@@ -1,4 +1,22 @@
 {
+    "ssh_connections": [
+        {
+            "host": "kibahome",
+            "args": [],
+            "projects": [
+                {
+                    "paths": [
+                        "/home/krishan/Projects/homeserver"
+                    ]
+                },
+                {
+                    "paths": [
+                        "/home/krishan/Projects/white-owl-trends"
+                    ]
+                }
+            ]
+        }
+    ],
     "markdown_preview_font_size": 14.0,
     "focus_follows_mouse": {
         "enabled": false
@@ -12,8 +30,6 @@
         "show_active_file": false,
         "active_language_button": true
     },
-    "server_url": "",
-    "proxy": "",
     "tasks": {
         "enabled": true
     },
@@ -133,16 +149,4 @@
         "solidity": true,
         "mdx": true,
     },
-    "ssh_connections": [
-        {
-            "host": "kibahome",
-            "username": "krishan",
-            "port": 22,
-            "projects": [
-                {
-                    "paths": ["/home/krishan/Projects/white-owl-api"]
-                }
-            ]
-        }
-    ]
 }

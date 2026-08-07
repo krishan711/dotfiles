@@ -342,7 +342,7 @@ def fetch_github_copilot(token):
     try:
         user = github_get_json("/user", token)
         login = user["login"]
-        usage = github_get_json(f"/users/{login}/settings/billing/premium_request/usage", token)
+        usage = github_get_json(f"/users/{login}/settings/billing/ai_credit/usage", token)
         return {"login": login, "usage": usage}, None
     except urllib.error.HTTPError as e:
         if e.code in (401, 403):
@@ -407,21 +407,20 @@ def parse_codex(data):
     return windows
 
 def parse_github_copilot(data):
-    """Return compact current-month Copilot premium-request usage summary."""
+    """Return current-month Copilot AI credit usage summary."""
     usage = data.get("usage") or {}
     items = usage.get("usageItems") or []
-    total_requests = sum(float(item.get("grossQuantity", 0) or 0) for item in items)
-    billable_requests = sum(float(item.get("netQuantity", 0) or 0) for item in items)
-    billable_amount = sum(float(item.get("netAmount", 0) or 0) for item in items)
+    credits = sum(
+        float(item.get("grossQuantity", 0) or 0)
+        for item in items
+        if item.get("unitType", "").lower() in ("aicredits", "ai-credits")
+    )
 
     limit = GITHUB_COPILOT_MONTHLY_LIMIT
-
-    used_pct = min(100.0, 100.0 * total_requests / limit) if limit > 0 else 0.0
+    used_pct = min(100.0, 100.0 * credits / limit) if limit > 0 else 0.0
     return {
         "login": data.get("login"),
-        "total_requests": total_requests,
-        "billable_requests": billable_requests,
-        "billable_amount": billable_amount,
+        "credits": credits,
         "monthly_limit": limit,
         "used_pct": used_pct,
     }
@@ -636,13 +635,11 @@ def main():
         print(f"⚠ {github_err} | color=orange")
     elif github_copilot:
         print(
-            f"month   {meter(github_copilot['used_pct']):<8} "
-            f"{github_copilot['used_pct']:.0f}%  "
-            f"{github_copilot['total_requests']:.0f}/{github_copilot['monthly_limit']:.0f} "
+            f"{'1-mnth':<7} {meter(github_copilot['used_pct']):<8} "
+            f"{github_copilot['used_pct']:>3.0f}%  "
             f"| font=Menlo{color_for(github_copilot['used_pct'])}"
         )
-        print(f"billed  ${github_copilot['billable_amount']:.2f} | font=Menlo")
-    print("View usage online | href=https://github.com/settings/billing/premium_requests_usage")
+    print("View usage online | href=https://github.com/settings/billing/ai_usage")
 
     print("---")
     print(f"Refresh now | bash={script} terminal=false refresh=true")

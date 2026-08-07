@@ -108,13 +108,13 @@ added = yellow
 
 [diff]
 	algorithm = histogram
+	tool = zed
 	colorMoved = plain
 	mnemonicPrefix = true
 	renames = true
 
-[difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
-
+[difftool "zed"]
+	cmd = zed --wait --diff "$LOCAL" "$REMOTE"
 [diff "bin"]
 	# Use `hexdump` to diff binary files.
 	textconv = hexdump -v -C
@@ -131,10 +131,10 @@ added = yellow
 [merge]
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
-	tool = vscode
+	tool = zed
 
-[mergetool "vscode"]
-	cmd = code --wait $MERGED
+[mergetool "zed"]
+	cmd = zed --wait "$MERGED"
 
 [push]
 	# https://git-scm.com/docs/git-config#git-config-pushdefault

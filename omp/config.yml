@@ -19,7 +19,9 @@ modelRoles:
   smol: openai-codex/gpt-5.6-luna:low
   tiny: openai-codex/gpt-5.6-luna:low
   advisor: anthropic/claude-sonnet-5
-  default: anthropic/claude-sonnet-5:medium
+  task: anthropic/claude-sonnet-5
+  plan: anthropic/claude-sonnet-5
+  default: openai-codex/gpt-5.6-luna:high
 theme: 
   dark: dark
 hideThinkingBlock: true
@@ -47,7 +49,7 @@ autolearn:
 edit: 
   mode: hashline
 inspect_image: 
-  enabled: true
+  mode: "on"
 plan: 
   defaultOnStartup: false
 followUpMode: all
@@ -57,6 +59,10 @@ doubleEscapeAction: none
 treeFilterMode: default
 paste: 
   largeMenuThreshold: 100
+input: 
+  inline_paste_threshold: 10
+  file_paste_threshold: 100
+  auto_file_paste_dir: /tmp/omp_pastes
 enabledModels: 
   - anthropic/claude-sonnet-5:medium
   - openai-codex/gpt-5.6-luna:high
@@ -66,3 +72,7 @@ enabledModels:
   - openai-codex/gpt-5.6-sol:low
   - openai-codex/gpt-5.6-sol:medium
   - openai-codex/gpt-5.6-sol:high
+task: 
+  eager: default
+dev: 
+  autoqaConsent: denied
