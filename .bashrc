@@ -22,3 +22,7 @@ if [ -n "$DOTFILES_PATH" ] && [ -f "$DOTFILES_PATH/.bash_profile" ]; then
 elif [ -f "$HOME/.bash_profile" ]; then
     source "$HOME/.bash_profile"
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

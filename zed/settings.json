@@ -1,4 +1,10 @@
 {
+    "file_finder": {
+        "include_ignored": "all"
+    },
+    "markdown_preview": {
+        "font_size": 14.0
+    },
     "ssh_connections": [
         {
             "host": "kibahome",
@@ -17,7 +23,6 @@
             ]
         }
     ],
-    "markdown_preview_font_size": 14.0,
     "focus_follows_mouse": {
         "enabled": false
     },

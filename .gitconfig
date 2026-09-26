@@ -173,3 +173,9 @@ email = krishan711@gmail.com
 
 [advice]
 addIgnoredFile = false
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential

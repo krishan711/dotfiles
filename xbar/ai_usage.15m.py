@@ -45,7 +45,6 @@ import base64
 import hashlib
 import json
 import os
-import shlex
 import shutil
 import struct
 import subprocess
@@ -62,9 +61,6 @@ CLAUDE_USAGE_URL = "https://api.anthropic.com/api/oauth/usage"
 CLAUDE_REFRESH_URL = "https://platform.claude.com/v1/oauth/token"
 CLAUDE_OAUTH_CLIENT_ID = "9d1c250a-e61b-44d9-88ed-5944d1962f5e"
 CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage"
-GITHUB_API_BASE = "https://api.github.com"
-GITHUB_COPILOT_MONTHLY_LIMIT = 1500.0
-GITHUB_SOURCE_FILE = os.path.expanduser("~/.bash_secrets")
 
 
 def load_pointer_config():
@@ -223,38 +219,6 @@ def get_codex_token():
         return None, "not logged in — run `codex login`"
     return token, None
 
-def get_github_token():
-    """Return (token, error) by sourcing ~/.bash_secrets locally at runtime.
-    The widget may read the resulting GitHub token value, but should never read
-    or print the secret file contents directly. Prefer a dedicated billing
-    token from GITHUB_TOKEN_PLAN over a legacy GITHUB_TOKEN."""
-    if os.environ.get("GITHUB_TOKEN_PLAN"):
-        return os.environ["GITHUB_TOKEN_PLAN"], None
-    source_file = os.path.expanduser(
-        os.environ.get("AI_USAGE_GITHUB_SOURCE_FILE")
-        or POINTER_CONFIG.get("github_source_file")
-        or GITHUB_SOURCE_FILE
-    )
-    cmd = (
-        f"source {shlex.quote(source_file)} >/dev/null 2>&1; "
-        'printf %s "${GITHUB_TOKEN_PLAN:-$GITHUB_TOKEN}"'
-    )
-    try:
-        out = subprocess.run(
-            ["/bin/bash", "-lc", cmd],
-            capture_output=True, text=True, timeout=10,
-        )
-    except (subprocess.TimeoutExpired, FileNotFoundError):
-        out = None
-    if out:
-        token = out.stdout.strip()
-        if token:
-            return token, None
-    if os.environ.get("GITHUB_TOKEN"):
-        return os.environ["GITHUB_TOKEN"], None
-    if out is None:
-        return None, "could not source ~/.bash_secrets"
-    return None, "no GITHUB_TOKEN_PLAN or GITHUB_TOKEN in ~/.bash_secrets"
 
 # ---- fetching (no data caching — every call goes live) ----
 #
@@ -325,31 +289,7 @@ def http_get_json(url, token, backoff_name=None):
     except Exception:
         return None, "offline?"
 
-def github_get_json(path, token):
-    req = urllib.request.Request(
-        GITHUB_API_BASE + path,
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Accept": "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2026-03-10",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        return json.loads(resp.read())
 
-def fetch_github_copilot(token):
-    """Return ({login, usage}, error). Always live."""
-    try:
-        user = github_get_json("/user", token)
-        login = user["login"]
-        usage = github_get_json(f"/users/{login}/settings/billing/ai_credit/usage", token)
-        return {"login": login, "usage": usage}, None
-    except urllib.error.HTTPError as e:
-        if e.code in (401, 403):
-            return None, "token rejected or lacks billing access"
-        return None, f"API error {e.code}"
-    except Exception:
-        return None, "offline?"
 
 # ---- parsing ----
 
@@ -406,24 +346,6 @@ def parse_codex(data):
         }
     return windows
 
-def parse_github_copilot(data):
-    """Return current-month Copilot AI credit usage summary."""
-    usage = data.get("usage") or {}
-    items = usage.get("usageItems") or []
-    credits = sum(
-        float(item.get("grossQuantity", 0) or 0)
-        for item in items
-        if item.get("unitType", "").lower() in ("aicredits", "ai-credits")
-    )
-
-    limit = GITHUB_COPILOT_MONTHLY_LIMIT
-    used_pct = min(100.0, 100.0 * credits / limit) if limit > 0 else 0.0
-    return {
-        "login": data.get("login"),
-        "credits": credits,
-        "monthly_limit": limit,
-        "used_pct": used_pct,
-    }
 
 # ---- rendering ----
 
@@ -539,9 +461,7 @@ def main():
 
     claude_auth, claude_source, claude_err = load_claude_auth()
     codex_token, codex_err = get_codex_token()
-    github_token, github_err = get_github_token()
     claude_windows, codex_windows = {}, {}
-    github_copilot = None
     if claude_auth:
         expires_at = claude_auth.get("expiresAt")
         data = None
@@ -582,12 +502,6 @@ def main():
             codex_windows = parse_codex(data)
         else:
             codex_err = err
-    if github_token:
-        data, err = fetch_github_copilot(github_token)
-        if data:
-            github_copilot = parse_github_copilot(data)
-        else:
-            github_err = err
 
     # ---- menu bar icon ----
     def worst_pct(windows):
@@ -629,17 +543,6 @@ def main():
             print(window_line(label, w))
     print("View usage online | href=https://chatgpt.com/codex/settings/usage")
 
-    print("---")
-    print("GitHub Copilot")
-    if github_err and not github_copilot:
-        print(f"⚠ {github_err} | color=orange")
-    elif github_copilot:
-        print(
-            f"{'1-mnth':<7} {meter(github_copilot['used_pct']):<8} "
-            f"{github_copilot['used_pct']:>3.0f}%  "
-            f"| font=Menlo{color_for(github_copilot['used_pct'])}"
-        )
-    print("View usage online | href=https://github.com/settings/billing/ai_usage")
 
     print("---")
     print(f"Refresh now | bash={script} terminal=false refresh=true")

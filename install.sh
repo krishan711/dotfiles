@@ -40,6 +40,14 @@ ln -sfn "$(pwd)/.inputrc" "$HOME/.inputrc"
 ln -sfn "$(pwd)/.screenrc" "$HOME/.screenrc"
 ln -sfn "$(pwd)/.tmux.conf" "$HOME/.tmux.conf"
 ln -sfn "$(pwd)/.bashrc" "$HOME/.bashrc"
+
+# Symlink shared agent instructions into every tool's config location
+echo "Linking AGENTS.md into agent tool configs..."
+mkdir -p "$HOME/.claude" "$HOME/.codex" "$HOME/.omp/agent" "$HOME/.pi/agent"
+ln -sfn "$(pwd)/agents/AGENTS.md" "$HOME/.claude/CLAUDE.md"
+ln -sfn "$(pwd)/agents/AGENTS.md" "$HOME/.codex/AGENTS.md"
+ln -sfn "$(pwd)/agents/AGENTS.md" "$HOME/.omp/agent/AGENTS.md"
+ln -sfn "$(pwd)/agents/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
 echo 'source ~/.bashrc' > ~/.bash_profile
 
 source ~/.bash_profile
