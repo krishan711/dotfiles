@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+if [[ "$(uname -s)" == "Linux" ]]; then
+    if command -v apt-get &> /dev/null; then
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
+    elif command -v dnf &> /dev/null; then
+        sudo dnf update -y && sudo dnf autoremove -y
+    elif command -v pacman &> /dev/null; then
+        sudo pacman -Syu --noconfirm
+    else
+        echo "Unsupported package manager." >&2
+        exit 1
+    fi
+    exit 0
+fi
+
 # On Apple Silicon, re-exec natively if running under Rosetta 2.
 if [ "$(uname -m)" = "x86_64" ] && [ -d /opt/homebrew ]; then
     exec arch -arm64 /bin/bash "$0" "$@"

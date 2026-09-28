@@ -63,5 +63,5 @@ fi
 # Install vscode extensions
 ./vscode/install-extensions.sh
 
-# Run updates (brew upgrade + SwiftBar plugins)
+# Run updates (brew/apt upgrade)
 ./update.sh

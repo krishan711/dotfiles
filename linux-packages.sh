@@ -228,6 +228,17 @@ if ! command -v code &> /dev/null; then
 fi
 
 ###############################################################################
+# Zed                                                                         #
+###############################################################################
+
+if ! command -v zed &> /dev/null && [[ ! -x "$HOME/.local/bin/zed" ]]; then
+    echo "Installing Zed..."
+    curl -fsSL https://zed.dev/install.sh | sh
+fi
+# Ensure config dir exists so .bash_profile can symlink zed/settings.json into it.
+mkdir -p "$HOME/.config/zed"
+
+###############################################################################
 # Oh My Pi                                                                    #
 ###############################################################################
 
